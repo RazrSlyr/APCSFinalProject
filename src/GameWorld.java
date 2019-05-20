@@ -1,5 +1,7 @@
 import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -12,6 +14,7 @@ public class GameWorld extends World {
     private double rotate;
     private double positionZ;
     private double positionX;
+    private Group cameraGroup;
 
     public GameWorld() {
         super();
@@ -23,7 +26,7 @@ public class GameWorld extends World {
                 new Rotate(0, Rotate.Y_AXIS),
                 new Rotate(-10, Rotate.X_AXIS),
                 new Translate(0, 0, 0));
-        getChildren().add(camera);
+        cameraGroup = new Group(camera);
         camera.setRotationAxis(new Point3D(0, 1, 0));
     }
 
@@ -37,42 +40,46 @@ public class GameWorld extends World {
                 new Rotate(0, Rotate.Y_AXIS),
                 new Rotate(0, Rotate.X_AXIS),
                 new Translate(0, 0, 0));
-
-        getChildren().add(camera);
+        cameraGroup = new Group(camera);
         camera.setRotationAxis(new Point3D(0, 1, 0));
+    }
+
+    public void setCameraGroup(Group g){
+        cameraGroup = g;
+    }
+
+    public void addCameraGroupToWorld(){
+        getChildren().add(cameraGroup);
     }
 
     @Override
     public void act() {
-
-
-
         if (isKeyDown(KeyCode.A)) {
             rotate -= 1;
             if(rotate < 0) {
                 rotate += 360;
             }
-            camera.setRotate(rotate);
+            cameraGroup.setRotate(rotate);
 
         }
 
         if (isKeyDown(KeyCode.D)) {
             rotate = (rotate + 1) % 360;
-            camera.setRotate(rotate);
+            cameraGroup.setRotate(rotate);
         }
 
         if (isKeyDown(KeyCode.W)) {
             positionZ += .5 * Math.cos(rotate / 180 * Math.PI);
             positionX += .5 * Math.sin(rotate / 180 * Math.PI);
-            camera.setTranslateZ(positionZ);
-            camera.setTranslateX(positionX);
+            cameraGroup.setTranslateZ(positionZ);
+            cameraGroup.setTranslateX(positionX);
         }
 
         if (isKeyDown(KeyCode.S)) {
             positionZ -= .5 * Math.cos(rotate / 180 * Math.PI);
             positionX -= .5 * Math.sin(rotate / 180 * Math.PI);
-            camera.setTranslateZ(positionZ);
-            camera.setTranslateX(positionX);
+            cameraGroup.setTranslateZ(positionZ);
+            cameraGroup.setTranslateX(positionX);
         }
 
       /*  Rotate r = (Rotate)camera.getTransforms().get(0);
