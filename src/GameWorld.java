@@ -3,6 +3,7 @@ import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
@@ -15,12 +16,30 @@ public class GameWorld extends World {
     private double rotateXAxis;
     private double positionZ;
     private double positionX;
-    private Group cameraGroup;
+    private double positionY;
+    private Group cameraGroup; //HAVE TO MOVE FULl group gun + player
     private AmbientLight light;
     private int[] bounds;
     private double mouseX;
     private double mouseY;
     private Robot r;
+
+
+    private boolean inAir = false;
+    private int speedX;
+    private double oldX;
+    private double oldZ;
+    //variable that keeps track of if you're grounded (boolean)
+    //model gravity equation with acceleration(final) and velocityY
+    //collide with ground will set boolean to true
+    //keep track of velocity in x and y if not grounded keep velocity x and velocity y, rotateY has angle
+    // rotateY angle
+    //use a variable to keep track of time to know how long since the last acrt was called
+    //x component: Xc(positionX) - Xo
+    //z component: Zc(positionZ) - Zo
+    //x speed: x component / actTime
+    //z speed: z component / actTime
+    //when you're in the air, ignore the keyboard inputs, movement in x z is x SPeed and z Speed you were before
 
     public GameWorld() {
         super();
@@ -38,6 +57,7 @@ public class GameWorld extends World {
 
     public GameWorld(double width, double height) {
         super(width, height);
+        //light = new AmbientLight(Color.LIGHTGOLDENRODYELLOW);
         bounds = getBounds();
         r = null;
         try {
@@ -62,6 +82,7 @@ public class GameWorld extends World {
                 new Translate(0, 0, 0));
         cameraGroup = new Group(camera);
         camera.setRotationAxis(new Point3D(0, 1, 0));
+        //getChildren().add(light);
     }
 
     public void setCameraGroup(Group g) {
@@ -78,42 +99,57 @@ public class GameWorld extends World {
         double newMouseX = MouseInfo.getPointerInfo().getLocation().getX();
         double newMouseY = MouseInfo.getPointerInfo().getLocation().getY();
 
-        if (isKeyDown(KeyCode.A)) {
- /*           rotateYAxis -= 1;
-            if (rotateYAxis < 0) {
-                rotateYAxis += 360;
+
+
+        double speedX = (positionX - oldX) / deltaTime();
+
+        double speedZ = (positionZ - oldZ) / deltaTime();
+
+        inAir = isKeyDown(KeyCode.SPACE);
+
+        if(!inAir) {
+
+            if (isKeyDown(KeyCode.A)) {
+     /*           rotateYAxis -= 1;
+                if (rotateYAxis < 0) {
+                    rotateYAxis += 360;
+                }
+                cameraGroup.setRotate(rotateYAxis);*/
+                positionZ += .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+                positionX += .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+
             }
-            cameraGroup.setRotate(rotateYAxis);*/
-            positionZ += .5 * Math.cos((rotateYAxis - 90)/ 180 * Math.PI);
-            positionX += .5 * Math.sin((rotateYAxis - 90)/ 180 * Math.PI);
-            cameraGroup.setTranslateZ(positionZ);
-            cameraGroup.setTranslateX(positionX);
+
+            if (isKeyDown(KeyCode.D)) {
+    /*            rotateYAxis = (rotateYAxis + 1) % 360;
+                cameraGroup.setRotate(rotateYAxis);*/
+                positionZ += .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+                positionX += .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+            }
+
+            if (isKeyDown(KeyCode.W)) {
+                positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+            }
+
+            if (isKeyDown(KeyCode.S)) {
+                positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+            }
+
+        } else {
+            //in air, can't move keys, but can look
+
 
         }
-
-        if (isKeyDown(KeyCode.D)) {
-/*            rotateYAxis = (rotateYAxis + 1) % 360;
-            cameraGroup.setRotate(rotateYAxis);*/
-            positionZ += .5 * Math.cos((rotateYAxis + 90)/ 180 * Math.PI);
-            positionX += .5 * Math.sin((rotateYAxis + 90)/ 180 * Math.PI);
-            cameraGroup.setTranslateZ(positionZ);
-            cameraGroup.setTranslateX(positionX);
-        }
-
-        if (isKeyDown(KeyCode.W)) {
-            positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-            positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-            cameraGroup.setTranslateZ(positionZ);
-            cameraGroup.setTranslateX(positionX);
-        }
-
-        if (isKeyDown(KeyCode.S)) {
-            positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-            positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-            cameraGroup.setTranslateZ(positionZ);
-            cameraGroup.setTranslateX(positionX);
-        }
-
         if (newMouseX != mouseX) {
             rotateYAxis += (newMouseX - mouseX) / 5;
             if (rotateYAxis < 0) {
@@ -139,6 +175,10 @@ public class GameWorld extends World {
             mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
         }
 
+
+        oldX = newMouseX;
+
+        oldZ = positionZ;
 
         System.out.println(deltaTime());
     }

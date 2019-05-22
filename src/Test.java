@@ -47,7 +47,7 @@ public class Test extends Application {
         material.setDiffuseMap(new Image(getClass().getResourceAsStream("extraEpic.jpg")));
         box.setMaterial(material);
 
-        GameWorld world = new GameWorld(750, 750);
+        GameWorld world = new GameWorld(500, 500);
 
         box.setTranslateX(6);
 
@@ -83,14 +83,14 @@ public class Test extends Application {
 
         world.addAll(floor, box2, box);
 
-        SubScene subScene = new SubScene(world, 1920, 1080, true, SceneAntialiasing.BALANCED);
+        SubScene subScene = new SubScene(world, 500,500, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.ALICEBLUE);
         subScene.setCamera(world.getCamera());
         Group group = new Group();
         group.getChildren().add(subScene);
         world.start();
 
-        Scene scene = new Scene(group, 1920, 1080, true);
+        Scene scene = new Scene(group, 500, 500, true);
         scene.setOnKeyPressed(event -> world.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> world.setKeyUp(event.getCode()));
 
