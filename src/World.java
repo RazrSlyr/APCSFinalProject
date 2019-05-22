@@ -15,6 +15,8 @@ public abstract class World extends Group {
     private HashMap<Class, ArrayList> actors;
     private HashSet<KeyCode> keyCodes;
     private AnimationTimer actTimer;
+    private double currentTime;
+    private double oldTime;
 
     public World() {
         actors = new HashMap<>();
@@ -23,6 +25,14 @@ public abstract class World extends Group {
         actTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                if(oldTime == currentTime) {
+                    currentTime = System.currentTimeMillis();
+                } else {
+                    double temp = currentTime;
+                    currentTime = System.currentTimeMillis();
+                    oldTime = temp;
+                }
+
                 act();
                 for (Node n : getChildren()) {
                     if (n instanceof Actor) {
@@ -93,10 +103,16 @@ public abstract class World extends Group {
         }
     }
 
+    public double deltaTime() {
+        return currentTime - oldTime;
+    }
+
     public abstract void act();
 
     public void start() {
         actTimer.start();
+        currentTime = System.currentTimeMillis();
+        oldTime = currentTime;
     }
 
     public void stop() {

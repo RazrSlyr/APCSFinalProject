@@ -133,8 +133,6 @@ public class GameWorld extends World {
             mouseY = newMouseY;
         }
 
-        System.out.println(rotateXAxis);
-
         if(mouseX >= bounds[0] * 0.9 || mouseX <= bounds[0] * 0.1 || mouseY >= bounds[1] * 0.9 || mouseY <= bounds[1] * 0.1) {
             moveMouse(bounds[0] / 2, bounds[1] / 2);
             mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX();
@@ -142,9 +140,7 @@ public class GameWorld extends World {
         }
 
 
-
-      /*  Rotate r = (Rotate)camera.getTransforms().get(0);
-        camera.getTransforms().set(0, new Rotate(r.getAngle() - 10, Rotate.Y_AXIS));*/
+        System.out.println(deltaTime());
     }
 
     public PerspectiveCamera getCamera() {
