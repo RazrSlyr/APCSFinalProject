@@ -4,13 +4,12 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
 import java.awt.*;
 
-public class GameWorld extends World {
+public class Player extends World {
 
     private PerspectiveCamera camera;
     private double rotateYAxis;
@@ -42,7 +41,7 @@ public class GameWorld extends World {
     //z speed: z component / actTime
     //when you're in the air, ignore the keyboard inputs, movement in x z is x SPeed and z Speed you were before
 
-    public GameWorld() {
+    public Player() {
         super();
         rotateYAxis = 0;
         positionZ = 0;
@@ -56,7 +55,7 @@ public class GameWorld extends World {
         camera.setRotationAxis(new Point3D(0, 1, 0));
     }
 
-    public GameWorld(double width, double height) {
+    public Player(double width, double height) {
         super(width, height);
         //light = new AmbientLight(Color.LIGHTGOLDENRODYELLOW);
         bounds = getBounds();

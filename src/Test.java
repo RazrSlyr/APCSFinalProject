@@ -1,17 +1,10 @@
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Point3D;
 import javafx.scene.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.RotateEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
-import javafx.scene.shape.TriangleMesh;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 public class Test extends Application {
@@ -47,7 +40,7 @@ public class Test extends Application {
         material.setDiffuseMap(new Image(getClass().getResourceAsStream("extraEpic.jpg")));
         box.setMaterial(material);
 
-        GameWorld world = new GameWorld(500, 500);
+        Player world = new Player(500, 500);
 
         box.setTranslateX(6);
 
@@ -83,14 +76,14 @@ public class Test extends Application {
 
         world.addAll(floor, box2, box);
 
-        SubScene subScene = new SubScene(world, 500,500, true, SceneAntialiasing.BALANCED);
+        SubScene subScene = new SubScene(world, 750, 750, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.ALICEBLUE);
         subScene.setCamera(world.getCamera());
         Group group = new Group();
         group.getChildren().add(subScene);
         world.start();
 
-        Scene scene = new Scene(group, 500, 500, true);
+        Scene scene = new Scene(group, 750, 750, true);
         scene.setOnKeyPressed(event -> world.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> world.setKeyUp(event.getCode()));
 

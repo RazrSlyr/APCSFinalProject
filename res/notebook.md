@@ -2,7 +2,7 @@
 
 ## Preface
 
-Group includes Rohan Venkatapuram (Bumbing Bingus), Ashish Rao (Jean-Luc Picard), Amartya Bhattacharya (TigarStar), and 
+Group includes Rohan Venkatapuram (Bumbing Bingus), Ashish Rao (Jean-Luc Picard), Amartya Bhattacharya (TigerStar), and 
 Siddharth Vishwanathan (Shadowclaw Epic Styl). 
 Game being built is a 3D first-person shooter game which allows for players to use traditional weaponry 
 and also a portal gun similar to the popular game 'Portal' to take out targets.
@@ -27,3 +27,8 @@ First whole group meeting. Discussed plan for development, and distributed tasks
 
 Bumbing Bingus
 * Added deltaTime() to world to help with movement calculations
+
+## 5/22/19
+
+TigerStar
+* Set up Level class
