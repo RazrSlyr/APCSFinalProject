@@ -69,7 +69,7 @@ public class Test extends Application {
             }
         };
 
-        gun.setTranslateY(0.15);
+        gun.setTranslateY(-2);
         gun.setTranslateX(0.5);
         gun.setTranslateZ(6);
         gun.setMaterial(new PhongMaterial(Color.RED));
