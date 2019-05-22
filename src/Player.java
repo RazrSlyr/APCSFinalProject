@@ -9,7 +9,7 @@ import javafx.scene.transform.Translate;
 
 import java.awt.*;
 
-public class GameWorld extends World {
+public class Player extends World {
 
     private PerspectiveCamera camera;
     private double rotateYAxis;
@@ -43,7 +43,7 @@ public class GameWorld extends World {
     //z speed: z component / actTime
     //when you're in the air, ignore the keyboard inputs, movement in x z is x SPeed and z Speed you were before
 
-    public GameWorld() {
+    public Player() {
         super();
         rotateYAxis = 0;
         positionZ = 0;
@@ -57,7 +57,7 @@ public class GameWorld extends World {
         camera.setRotationAxis(new Point3D(0, 1, 0));
     }
 
-    public GameWorld(double width, double height) {
+    public Player(double width, double height) {
         super(width, height);
         //light = new AmbientLight(Color.LIGHTGOLDENRODYELLOW);
         bounds = getBounds();
@@ -83,12 +83,19 @@ public class GameWorld extends World {
                 new Rotate(0, Rotate.X_AXIS),
                 new Translate(0, 0, 0));
         cameraGroup = new Group(camera);
+        cameraGroup.getTransforms().addAll(
+                new Rotate(0, Rotate.X_AXIS)
+        );
         camera.setRotationAxis(new Point3D(0, 1, 0));
         //getChildren().add(light);
     }
 
     public void setCameraGroup(Group g) {
         cameraGroup = g;
+        cameraGroup.getTransforms().addAll(
+                new Rotate(0, Rotate.X_AXIS)
+        );
+        camera.setRotationAxis(new Point3D(0, 1, 0));
     }
 
     public void addCameraGroupToWorld() {
@@ -120,29 +127,81 @@ public class GameWorld extends World {
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
 
+                for(Node n : getChildren()){
+                    if(!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)){
+                        if(n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())){
+                            System.out.println("here");
+
+                            positionZ -= .5 * Math.cos((rotateYAxis - 90)/ 180 * Math.PI);
+                            positionX -= .5 * Math.sin((rotateYAxis - 90)/ 180 * Math.PI);
+
+                            cameraGroup.setTranslateZ(positionZ);
+                            cameraGroup.setTranslateX(positionX);
+                        }
+                    }
+                }
+
             }
 
-            if (isKeyDown(KeyCode.D)) {
-    /*            rotateYAxis = (rotateYAxis + 1) % 360;
-                cameraGroup.setRotate(rotateYAxis);*/
-                positionZ += .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
-                positionX += .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
-                cameraGroup.setTranslateZ(positionZ);
-                cameraGroup.setTranslateX(positionX);
-            }
+        if (isKeyDown(KeyCode.D)) {
+/*            rotateYAxis = (rotateYAxis + 1) % 360;
+            cameraGroup.setRotate(rotateYAxis);*/
+            positionZ += .5 * Math.cos((rotateYAxis + 90)/ 180 * Math.PI);
+            positionX += .5 * Math.sin((rotateYAxis + 90)/ 180 * Math.PI);
+            cameraGroup.setTranslateZ(positionZ);
+            cameraGroup.setTranslateX(positionX);
 
-            if (isKeyDown(KeyCode.W)) {
-                positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-                cameraGroup.setTranslateZ(positionZ);
-                cameraGroup.setTranslateX(positionX);
-            }
+            for(Node n : getChildren()){
+                if(!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)){
+                    if(n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())){
+                        System.out.println("here");
 
-            if (isKeyDown(KeyCode.S)) {
-                positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-                cameraGroup.setTranslateZ(positionZ);
-                cameraGroup.setTranslateX(positionX);
+                        positionZ -= .5 * Math.cos((rotateYAxis - 90)/ 180 * Math.PI);
+                        positionX -= .5 * Math.sin((rotateYAxis - 90)/ 180 * Math.PI);
+
+                        cameraGroup.setTranslateZ(positionZ);
+                        cameraGroup.setTranslateX(positionX);
+                    }
+                }
+            }
+        }
+
+        if (isKeyDown(KeyCode.W)) {
+            positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+            positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+            cameraGroup.setTranslateZ(positionZ);
+            cameraGroup.setTranslateX(positionX);
+
+            for(Node n : getChildren()){
+                if(!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)){
+                    if(n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())){
+//                        System.out.println("here");
+                        positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                        positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                        cameraGroup.setTranslateZ(positionZ);
+                        cameraGroup.setTranslateX(positionX);
+                    }
+                }
+            }
+        }
+
+        if (isKeyDown(KeyCode.S)) {
+            positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+            positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+            cameraGroup.setTranslateZ(positionZ);
+            cameraGroup.setTranslateX(positionX);
+
+            for(Node n : getChildren()){
+                if(!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)){
+                    if(n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())){
+                        System.out.println("here");
+
+                        positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                        positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                        cameraGroup.setTranslateZ(positionZ);
+                        cameraGroup.setTranslateX(positionX);
+                    }
+                }
             }
 
         } else {
@@ -168,7 +227,8 @@ public class GameWorld extends World {
             if(Math.abs(rotateXAxis) > 90) {
                 rotateXAxis = 90 * Math.signum(rotateXAxis);
             }
-            camera.getTransforms().set(1, new Rotate(rotateXAxis, Rotate.X_AXIS));
+
+            cameraGroup.getTransforms().set(0, new Rotate(rotateXAxis, Rotate.X_AXIS));
             mouseY = newMouseY;
         }
 
