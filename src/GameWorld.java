@@ -26,9 +26,11 @@ public class GameWorld extends World {
 
 
     private boolean inAir = false;
-    private int speedX;
+    private double speedX, speedZ;
     private double oldX;
     private double oldZ;
+
+
     //variable that keeps track of if you're grounded (boolean)
     //model gravity equation with acceleration(final) and velocityY
     //collide with ground will set boolean to true
@@ -101,9 +103,7 @@ public class GameWorld extends World {
 
 
 
-        double speedX = (positionX - oldX) / deltaTime();
-
-        double speedZ = (positionZ - oldZ) / deltaTime();
+        System.out.println(speedX);
 
         inAir = isKeyDown(KeyCode.SPACE);
 
@@ -147,6 +147,9 @@ public class GameWorld extends World {
 
         } else {
             //in air, can't move keys, but can look
+            double currentY = positionY;
+            positionY -= 0.4;
+            cameraGroup.setTranslateY(positionY);
 
 
         }
@@ -175,12 +178,15 @@ public class GameWorld extends World {
             mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
         }
 
+        speedX = (positionX - oldX) / deltaTime();
 
-        oldX = newMouseX;
+        speedZ = (positionZ - oldZ) / deltaTime();
+
+        oldX = positionX;
 
         oldZ = positionZ;
 
-        System.out.println(deltaTime());
+        System.out.println(speedX);
     }
 
     public PerspectiveCamera getCamera() {
