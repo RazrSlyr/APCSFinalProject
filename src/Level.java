@@ -1,10 +1,12 @@
+import java.util.ArrayList;
+
 /**
  *
  */
 public abstract class Level extends World {
     /*Need for level
     platforms // store as an array list
-        objects
+        platform objects
             location
             lighting
             dimensions
@@ -26,6 +28,7 @@ public abstract class Level extends World {
 
     public long startTime;
 
+    public ArrayList<Platform> platforms = new ArrayList<>();
 
     public abstract void act();
 }
