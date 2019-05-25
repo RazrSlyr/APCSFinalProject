@@ -1,3 +1,6 @@
+package GameSpecific;
+
+import Structure.World;
 import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
@@ -156,8 +159,8 @@ public class Player extends World {
                     if(n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())){
                         System.out.println("here");
 
-                        positionZ -= .5 * Math.cos((rotateYAxis - 90)/ 180 * Math.PI);
-                        positionX -= .5 * Math.sin((rotateYAxis - 90)/ 180 * Math.PI);
+                        positionZ -= .5 * Math.cos((rotateYAxis + 90)/ 180 * Math.PI);
+                        positionX -= .5 * Math.sin((rotateYAxis + 90)/ 180 * Math.PI);
 
                         cameraGroup.setTranslateZ(positionZ);
                         cameraGroup.setTranslateX(positionX);
@@ -230,7 +233,7 @@ public class Player extends World {
             mouseY = newMouseY;
         }
 
-        if(mouseX >= bounds[0] * 0.9 || mouseX <= bounds[0] * 0.1 || mouseY >= bounds[1] * 0.9 || mouseY <= bounds[1] * 0.1) {
+        if(mouseX >= bounds[0] * 0.99 || mouseX <= bounds[0] * 0.01 || mouseY >= bounds[1] * 0.99 || mouseY <= bounds[1] * 0.01) {
             moveMouse(bounds[0] / 2, bounds[1] / 2);
             mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX();
             mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
