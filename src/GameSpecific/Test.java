@@ -1,3 +1,6 @@
+package GameSpecific;
+
+import Structure.ActorBox;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.image.Image;
@@ -85,6 +88,7 @@ public class Test extends Application {
         world.start();
 
         Scene scene = new Scene(group, 750, 750, true);
+        scene.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("extraEpic.jpg"))));
         scene.setOnKeyPressed(event -> world.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> world.setKeyUp(event.getCode()));
 

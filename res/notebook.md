@@ -32,3 +32,9 @@ Bumbing Bingus
 
 TigerStar
 * Set up Level class
+* Made Platforms
+
+# 5/24/19
+
+TigerStar
+* Made Targets

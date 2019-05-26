@@ -1,3 +1,6 @@
+package Structure;
+
+import Structure.Actor;
 import javafx.scene.shape.Box;
 
 public abstract class ActorBox extends Box implements Actor {
