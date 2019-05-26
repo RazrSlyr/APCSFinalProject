@@ -44,13 +44,14 @@ public class Test extends Application {
 
         box.setTranslateX(6);
 
-        ActorBox box2 = new ActorBox(5, 5, 5) {
+        ActorBox box2 = new ActorBox(5, 2, 5) {
             @Override
             public void act() {
             }
         };
 
         box2.setTranslateX(-6);
+        box2.setTranslateY(0);
         box2.setMaterial(new PhongMaterial());
         box2.setDrawMode(DrawMode.FILL);
         box.setDrawMode(DrawMode.FILL);
