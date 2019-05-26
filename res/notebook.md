@@ -34,10 +34,14 @@ TigerStar
 * Set up Level class
 * Made Platforms
 
-# 5/24/19
+## 5/24/19
 
 TigerStar
 * Made Targets
 
 Jean-Luc Picard
 * Begin work on collisions, come up with basic first iteration of code for collisions.
+## 5/25/19
+
+Bumbling Bingus
+* Started bullets. Bullet velocity is correct, but starting point needs some work

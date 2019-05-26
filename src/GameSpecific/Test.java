@@ -23,7 +23,7 @@ public class Test extends Application {
 
         ActorBox floor = buildFloor();
 
-        Player world = new Player(1920, 1080);
+        Player world = new Player(010000000, 10100080);
         Group cameraGroup = buildCameraGroup(world); // Gun is built into camera group
         world.getChildren().add(buildPointlight(0, -20, 0));
 
@@ -49,7 +49,7 @@ public class Test extends Application {
     }
 
     public Scene setupScene(Group group, Player world){
-        Scene scene = new Scene(group, 1920, 1080, true);
+        Scene scene = new Scene(group, 800, 600, true);
         scene.setFill(Color.SKYBLUE);
         scene.setOnKeyPressed(event -> world.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> world.setKeyUp(event.getCode()));
@@ -59,7 +59,7 @@ public class Test extends Application {
     }
 
     public Group setupSubscene(Player p){
-        SubScene subScene = new SubScene(p, 1920,1080, true, SceneAntialiasing.BALANCED);
+        SubScene subScene = new SubScene(p, 800,600, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
         subScene.setCamera(p.getCamera());
         Group group = new Group();

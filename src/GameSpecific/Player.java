@@ -1,6 +1,9 @@
 package GameSpecific;
 
+import Structure.ActorBox;
 import Structure.World;
+import com.sun.javafx.geom.Vec2d;
+import com.sun.javafx.geom.Vec3d;
 import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
@@ -8,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
@@ -33,6 +37,9 @@ public class Player extends World {
     private double speedX, speedZ;
     private double oldX;
     private double oldZ;
+    private boolean upReleased;
+
+    private ActorBox gun;
 
     private boolean wasInAir = false;
     private int counter = 0;
@@ -80,6 +87,7 @@ public class Player extends World {
         }
         moveMouse(bounds[0] / 2, bounds[1] / 2);
 
+        upReleased = true;
 
         mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX();
         mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
@@ -99,6 +107,28 @@ public class Player extends World {
         );
         camera.setRotationAxis(new Point3D(0, 1, 0));
         //getChildren().add(light);
+
+        gun = new ActorBox(0.5,0.5,5) {
+            @Override
+            public void act() {
+
+            }
+        };
+
+        gun.setTranslateY(-2);
+        gun.setTranslateX(0.5);
+        gun.setTranslateZ(6);
+        gun.setMaterial(new PhongMaterial(Color.RED));
+        gun.setRotationAxis(Rotate.Y_AXIS);
+        gun.setRotate(-5);
+
+        cameraGroup.getChildren().add(gun);
+
+        camera.setTranslateX(0);
+        camera.setTranslateY(0);
+        camera.setTranslateZ(0);
+
+
     }
 
     public void setCameraGroup(Group g) {
@@ -221,7 +251,8 @@ public class Player extends World {
             inAir = false;
         }
         if (newMouseX != mouseX) {
-            rotateYAxis += (newMouseX - mouseX) / 5;
+            rotateYAxis += ((newMouseX - mouseX) / 5);
+            rotateYAxis = rotateYAxis % 360;
             if (rotateYAxis < 0) {
                 rotateYAxis += 360;
             }
@@ -251,7 +282,23 @@ public class Player extends World {
 
         oldX = positionX;
         oldZ = positionZ;
+
+        if(isKeyDown(KeyCode.UP)) {
+            if(upReleased) {
+                Bullet b = new Bullet(new Vec3d(positionX, positionY, positionZ), new Vec2d(rotateXAxis, rotateYAxis), 1);
+                b.setMaterial(new PhongMaterial(Color.LIGHTCORAL));
+                getChildren().add(b);
+                System.out.printf("Position: %f x, %f y, %f z\n", positionX, positionY, positionZ);
+                System.out.printf("Angle: %f x, %f y\n", rotateXAxis, rotateYAxis);
+                System.out.printf("Bullet Speed: %f x, %f y, %f z\n", b.getSpeedX(), b.getSpeedY(), b.getSpeedZ());
+                upReleased = false;
+            }
+        } else {
+            upReleased = true;
+        }
     }
+
+
 
     public boolean isColliding(){
         for(Node n : getChildren()){
