@@ -41,6 +41,7 @@ public class Player extends World {
     private boolean firstTime = true;
     private int counterSpace = 0;
 
+
     //variable that keeps track of if you're grounded (boolean)
     //model gravity equation with acceleration(final) and velocityY
     //collide with ground will set boolean to true
@@ -91,7 +92,7 @@ public class Player extends World {
         camera.getTransforms().addAll(
                 new Rotate(0, Rotate.Y_AXIS),
                 new Rotate(0, Rotate.X_AXIS),
-                new Translate(0, 0, 0));
+                new Translate(0, -2 , 0));
         cameraGroup = new Group(camera);
         cameraGroup.getTransforms().addAll(
                 new Rotate(0, Rotate.X_AXIS)
@@ -138,52 +139,31 @@ public class Player extends World {
                 }
             }
             if (isKeyDown(KeyCode.A)) {
-     /*           rotateYAxis -= 1;
-                if (rotateYAxis < 0) {
-                    rotateYAxis += 360;
-                }
-                cameraGroup.setRotate(rotateYAxis);*/
                 positionZ += .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
                 positionX += .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
 
-                for (Node n : getChildren()) {
-                    if (!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
-                        if (n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())) {
-                            System.out.println("here");
-
-                            positionZ -= .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
-                            positionX -= .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
-
-                            cameraGroup.setTranslateZ(positionZ);
-                            cameraGroup.setTranslateX(positionX);
-                        }
-                    }
+                if(isColliding()){
+                    positionZ -= .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+                    positionX -= .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
                 }
 
             }
 
             if (isKeyDown(KeyCode.D)) {
-/*            rotateYAxis = (rotateYAxis + 1) % 360;
-            cameraGroup.setRotate(rotateYAxis);*/
                 positionZ += .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
                 positionX += .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
 
-                for (Node n : getChildren()) {
-                    if (!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
-                        if (n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())) {
-                            System.out.println("here");
-
-                        positionZ -= .5 * Math.cos((rotateYAxis + 90)/ 180 * Math.PI);
-                        positionX -= .5 * Math.sin((rotateYAxis + 90)/ 180 * Math.PI);
-
-                            cameraGroup.setTranslateZ(positionZ);
-                            cameraGroup.setTranslateX(positionX);
-                        }
-                    }
+                if (isColliding()) {
+                    positionZ -= .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+                    positionX -= .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
                 }
             }
 
@@ -193,16 +173,11 @@ public class Player extends World {
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
 
-                for (Node n : getChildren()) {
-                    if (!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
-                        if (n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())) {
-//                        System.out.println("here");
-                            positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                            positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-                            cameraGroup.setTranslateZ(positionZ);
-                            cameraGroup.setTranslateX(positionX);
-                        }
-                    }
+                if(isColliding()){
+                    positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                    positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
                 }
             }
 
@@ -212,17 +187,11 @@ public class Player extends World {
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
 
-                for (Node n : getChildren()) {
-                    if (!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
-                        if (n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())) {
-                            System.out.println("here");
-
-                            positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                            positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-                            cameraGroup.setTranslateZ(positionZ);
-                            cameraGroup.setTranslateX(positionX);
-                        }
-                    }
+                if(isColliding()){
+                    positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                    positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
                 }
             }
 
@@ -278,14 +247,22 @@ public class Player extends World {
         }
 
         speedX = (positionX - oldX) / deltaTime();
-
         speedZ = (positionZ - oldZ) / deltaTime();
 
         oldX = positionX;
-
         oldZ = positionZ;
+    }
 
-        System.out.println(speedX);
+    public boolean isColliding(){
+        for(Node n : getChildren()){
+            if(!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)){
+                if(n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent()) && !(n instanceof Floor)){
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public PerspectiveCamera getCamera() {

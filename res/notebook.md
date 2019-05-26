@@ -38,3 +38,6 @@ TigerStar
 
 TigerStar
 * Made Targets
+
+Jean-Luc Picard
+* Begin work on collisions, come up with basic first iteration of code for collisions.
