@@ -1,6 +1,8 @@
 package GameSpecific;
 
+import Structure.Actor;
 import Structure.World;
+import javafx.scene.Node;
 
 import java.util.ArrayList;
 
@@ -31,14 +33,30 @@ public abstract class Level extends World {
      */
 
     // Timer
-    public long startTime;
+    private long startTime = System.currentTimeMillis();
+    private long timeElapsed;
+
+    {
+        if (getRemaining() == 0) {
+            long endTime = System.currentTimeMillis();
+            timeElapsed = Math.abs(endTime - startTime);
+        }
+    }
 
     // Platforms
     public ArrayList<Platform> platforms = new ArrayList<>();
 
+    public long getTimeElapsed() {
+        return timeElapsed;
+    }
+
     // Targets
     private int numHit;
     private ArrayList<Target> targets = new ArrayList<>();
+
+    public <A extends Node & Actor> void add(Platform platform) {
+        super.add(platform);
+    }
 
     public int getNumHit() {
         int count = 0;
@@ -51,7 +69,12 @@ public abstract class Level extends World {
         return count;
     }
 
-    public int getRemaining() {
+    public <A extends Node & Actor> void add(Target target) {
+        super.add(target);
+        targets.add(target);
+    }
+
+    private int getRemaining() {
         return targets.size() - numHit;
     }
 

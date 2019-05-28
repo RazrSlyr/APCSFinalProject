@@ -1,7 +1,5 @@
 package GameSpecific;
 
-import GameSpecific.Floor;
-import GameSpecific.Player;
 import Structure.ActorBox;
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.application.Application;
@@ -13,9 +11,14 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
-import java.io.File;
-
 public class Test extends Application {
+
+    /**
+     * Java main for when running without JavaFX launcher
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -23,7 +26,7 @@ public class Test extends Application {
 
         ActorBox floor = buildFloor();
 
-        Player world = new Player(010000000, 10100080);
+        Player world = new Player(010000000, 10100080); // replace this with a level object, and have the player be a group that implements actor
         Group cameraGroup = buildCameraGroup(world); // Gun is built into camera group
         world.getChildren().add(buildPointlight(0, -20, 0));
 
@@ -48,7 +51,7 @@ public class Test extends Application {
         primaryStage.show();
     }
 
-    public Scene setupScene(Group group, Player world){
+    public Scene setupScene(Group group, Player world) {
         Scene scene = new Scene(group, 800, 600, true);
         scene.setFill(Color.SKYBLUE);
         scene.setOnKeyPressed(event -> world.setKeyDown(event.getCode()));
@@ -58,8 +61,8 @@ public class Test extends Application {
         return scene;
     }
 
-    public Group setupSubscene(Player p){
-        SubScene subScene = new SubScene(p, 800,600, true, SceneAntialiasing.BALANCED);
+    public Group setupSubscene(Player p) {
+        SubScene subScene = new SubScene(p, 800, 600, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
         subScene.setCamera(p.getCamera());
         Group group = new Group();
@@ -69,14 +72,14 @@ public class Test extends Application {
         return group;
     }
 
-    public AmbientLight buildAmbientLight(){
+    public AmbientLight buildAmbientLight() {
         AmbientLight a = new AmbientLight();
         a.setColor(Color.LIGHTGOLDENRODYELLOW);
 
         return a;
     }
 
-    public PointLight buildPointlight(int translateX, int translateY, int translateZ){
+    public PointLight buildPointlight(int translateX, int translateY, int translateZ) {
         PointLight p = new PointLight();
         p.setColor(Color.LIGHTGOLDENRODYELLOW);
 
@@ -87,7 +90,7 @@ public class Test extends Application {
         return p;
     }
 
-    public ActorBox buildFloor(){
+    public ActorBox buildFloor() {
         ActorBox floor = new Floor(100, 1, 100) {
             @Override
             public void act() {
@@ -101,18 +104,17 @@ public class Test extends Application {
         return floor;
     }
 
-    public Group buildTree(){
+    public Group buildTree() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
         Group tree = new Group();
         try {
             objImporter.read(getClass().getResource("../tree.obj"));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         MeshView[] treeMeshViews = objImporter.getImport();
-        for(MeshView treePart : treeMeshViews){
+        for (MeshView treePart : treeMeshViews) {
             treePart.setScaleX(3);
             treePart.setScaleY(3);
             treePart.setScaleZ(3);
@@ -125,14 +127,13 @@ public class Test extends Application {
         return tree;
     }
 
-    public Group buildHouse(){
+    public Group buildHouse() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
         Group house = new Group();
         try {
             objImporter.read(getClass().getResource("../house.obj"));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         MeshView[] houseMeshViews = objImporter.getImport();
@@ -142,7 +143,7 @@ public class Test extends Application {
         return house;
     }
 
-    public ActorBox buildExtraEpic(){
+    public ActorBox buildExtraEpic() {
         ActorBox box = new ActorBox(5, 5, 5) {
             private int rotate = 0;
 
@@ -161,19 +162,18 @@ public class Test extends Application {
         return box;
     }
 
-    public Group buildGun(){
+    public Group buildGun() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
         Group gun = new Group();
         try {
             objImporter.read(getClass().getResource("../KSR-29 sniper rifle new_obj.obj"));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         MeshView[] gunMeshViews = objImporter.getImport();
         System.out.println(gunMeshViews.length);
-        for(MeshView m : gunMeshViews){
+        for (MeshView m : gunMeshViews) {
             m.setScaleX(0.5);
             m.setScaleY(0.5);
             m.setScaleZ(0.5);
@@ -199,7 +199,7 @@ public class Test extends Application {
         return gun;
     }
 
-    public Group buildCameraGroup(Player p){
+    public Group buildCameraGroup(Player p) {
         PerspectiveCamera worldCamera = p.getCamera();
         worldCamera.setFarClip(5000.0);
         worldCamera.setNearClip(0.01);
@@ -213,12 +213,5 @@ public class Test extends Application {
         cameraGroup.setRotationAxis(Rotate.Y_AXIS);
 
         return cameraGroup;
-    }
-
-    /**
-     * Java main for when running without JavaFX launcher
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 }

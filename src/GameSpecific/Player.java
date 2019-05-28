@@ -2,8 +2,6 @@ package GameSpecific;
 
 import Structure.ActorBox;
 import Structure.World;
-import com.sun.javafx.geom.Vec2d;
-import com.sun.javafx.geom.Vec3d;
 import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
@@ -76,7 +74,7 @@ public class Player extends World {
     }
 
     public Player(double width, double height) {
-        super(width, height);
+//        super(width, height);
         //light = new AmbientLight(Color.LIGHTGOLDENRODYELLOW);
         bounds = getBounds();
         r = null;
@@ -285,7 +283,8 @@ public class Player extends World {
 
         if(isKeyDown(KeyCode.UP)) {
             if(upReleased) {
-                Bullet b = new Bullet(new Vec3d(positionX, positionY, positionZ), new Vec2d(rotateXAxis, rotateYAxis), 1);
+                System.out.println(camera.getBoundsInParent());
+                Bullet b = new Bullet(new double[]{positionX, positionY + 2, positionZ}, new double[]{rotateXAxis, rotateYAxis}, 1);
                 b.setMaterial(new PhongMaterial(Color.LIGHTCORAL));
                 getChildren().add(b);
                 System.out.printf("Position: %f x, %f y, %f z\n", positionX, positionY, positionZ);

@@ -11,6 +11,7 @@ public class Target extends ActorBox {
 
     void setHit(boolean hit) {
         isHit = hit;
+        // switch model
     }
 
     public Target(double width, double height, double depth) {
@@ -19,6 +20,5 @@ public class Target extends ActorBox {
 
     @Override
     public void act() {
-
     }
 }
