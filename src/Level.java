@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /**
- *
+ * Holds all the necessary information for creating a level
  */
 public abstract class Level extends World {
     /*Need for level
@@ -26,9 +26,30 @@ public abstract class Level extends World {
     add the levels and player to overarching group
      */
 
+    // Timer
     public long startTime;
 
+    // Platforms
     public ArrayList<Platform> platforms = new ArrayList<>();
+
+    // Targets
+    private int numHit;
+    private ArrayList<Target> targets = new ArrayList<>();
+
+    public int getNumHit() {
+        int count = 0;
+        for (Target target : targets) {
+            if (target.isHit()) {
+                count++;
+            }
+        }
+        numHit = count;
+        return count;
+    }
+
+    public int getRemaining() {
+        return targets.size() - numHit;
+    }
 
     public abstract void act();
 }
