@@ -1,3 +1,7 @@
+package GameSpecific;
+
+import Structure.ActorBox;
+
 public class Target extends ActorBox {
     private boolean isHit;
 

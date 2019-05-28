@@ -1,3 +1,7 @@
+package GameSpecific;
+
+import Structure.World;
+
 import java.util.ArrayList;
 
 /**
