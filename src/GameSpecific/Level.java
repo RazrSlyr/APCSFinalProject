@@ -1,15 +1,14 @@
 package GameSpecific;
 
-import Structure.Actor;
 import Structure.World;
-import javafx.scene.Node;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Holds all the necessary information for creating a level
  */
-public abstract class Level extends World {
+public class Level extends World {
     /*Need for level
     platforms // store as an array list
         platform objects
@@ -32,32 +31,27 @@ public abstract class Level extends World {
     add the levels and player to overarching group
      */
 
+    // Platforms
+    public ArrayList<Platform> platforms = new ArrayList<>();
     // Timer
     private long startTime = System.currentTimeMillis();
     private long timeElapsed;
+    // Targets
+    private int numHit;
+    private ArrayList<Target> targets = new ArrayList<>();
 
-    {
-        if (getRemaining() == 0) {
-            long endTime = System.currentTimeMillis();
-            timeElapsed = Math.abs(endTime - startTime);
-        }
-    }
-
-    // Platforms
-    public ArrayList<Platform> platforms = new ArrayList<>();
 
     public long getTimeElapsed() {
         return timeElapsed;
     }
 
-    // Targets
-    private int numHit;
-    private ArrayList<Target> targets = new ArrayList<>();
-
-    public <A extends Node & Actor> void add(Platform platform) {
+    public void add(Platform platform) {
         super.add(platform);
     }
 
+    public void addAll(Platform... platform) {
+        super.addAll(platform);
+    }
     public int getNumHit() {
         int count = 0;
         for (Target target : targets) {
@@ -69,14 +63,24 @@ public abstract class Level extends World {
         return count;
     }
 
-    public <A extends Node & Actor> void add(Target target) {
+    public void add(Target target) {
         super.add(target);
         targets.add(target);
+    }
+
+    public void addAll(Target... target) {
+        super.addAll(target);
+        targets.addAll(Arrays.asList(target));
     }
 
     private int getRemaining() {
         return targets.size() - numHit;
     }
 
-    public abstract void act();
+    public void act() {
+        if (getRemaining() != 0) {
+            timeElapsed += deltaTime();
+        }
+
+    }
 }

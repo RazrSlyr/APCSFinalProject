@@ -1,6 +1,5 @@
 package Structure;
 
-import Structure.Actor;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -26,7 +25,7 @@ public abstract class World extends Group {
         actTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if(oldTime == currentTime) {
+                if (oldTime == currentTime) {
                     currentTime = System.currentTimeMillis();
                 } else {
                     double temp = currentTime;
@@ -52,9 +51,7 @@ public abstract class World extends Group {
         });
 
         setOnKeyReleased(event -> {
-            if (keyCodes.contains(event.getCode())) {
-                keyCodes.remove(event.getCode());
-            }
+            keyCodes.remove(event.getCode());
         });
     }
 
