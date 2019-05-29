@@ -2,16 +2,9 @@ package GameSpecific;
 
 import Structure.ActorSphere;
 import Structure.World;
-import com.sun.javafx.geom.Vec2d;
-import com.sun.javafx.geom.Vec3d;
-import com.sun.javafx.sg.prism.NGNode;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import javafx.geometry.Point3D;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Shape3D;
 
 public class Bullet extends ActorSphere {
 
@@ -57,14 +50,14 @@ public class Bullet extends ActorSphere {
 
     }
 
-    public World getWorld() {
-        return (World)(getParent());
+    private World getWorld() {
+        return (World) (getParent());
     }
 
     @Override
     public void act() {
         World w = getWorld();
-        if(!hit) {
+        if (!hit) {
 
             time += w.deltaTime();
 
@@ -77,17 +70,17 @@ public class Bullet extends ActorSphere {
             setTranslateZ(posZ);
         }
 
-        if(time > 5000) {
+        if (time > 5000) {
             w.remove(this);
         }
 
-        if(isIntersectingObjectInParent(getTopParent()) && !hit) {
+        if (isIntersectingObjectInParent(getTopParent()) && !hit) {
             setRadius(7);
             hit = true;
             setMaterial(new PhongMaterial(explosionStart));
         }
 
-        if(hit) {
+        if (hit) {
             setRadius(getRadius() - 0.5);
             double deltaRed = (explosionEnd.getRed() - explosionStart.getRed()) / 14.0;
             double deltaGreen = (explosionEnd.getGreen() - explosionStart.getGreen()) / 14.0;
@@ -102,22 +95,22 @@ public class Bullet extends ActorSphere {
 
             setMaterial(new PhongMaterial(currColor));
 
-            if(getRadius() <= 0) {
+            if (getRadius() <= 0) {
                 w.remove(this);
             }
         }
     }
 
-    public double getSpeedX() {
+    private double getSpeedX() {
         return Math.sin(angleY / 180 * Math.PI) * speed;
     }
 
-    public double getSpeedY() {
+    private double getSpeedY() {
         return -Math.sin(angleX / 180 * Math.PI) * speed;
     }
 
-    public double getSpeedZ() {
-        return  Math.cos(angleY / 180 * Math.PI) * speed;
+    private double getSpeedZ() {
+        return Math.cos(angleY / 180 * Math.PI) * speed;
     }
 
     private Parent getTopParent() {
@@ -131,12 +124,12 @@ public class Bullet extends ActorSphere {
 
     private boolean isIntersectingObjectInParent(Parent p) {
         for (int i = 0; i < p.getChildrenUnmodifiable().size(); i++) {
-            if(p.getChildrenUnmodifiable().get(i) instanceof Parent && !(p.getChildrenUnmodifiable().get(i) instanceof Model)) {
-                if(isIntersectingObjectInParent((Parent)(p.getChildrenUnmodifiable().get(i)))) {
+            if (p.getChildrenUnmodifiable().get(i) instanceof Parent && !(p.getChildrenUnmodifiable().get(i) instanceof Model)) {
+                if (isIntersectingObjectInParent((Parent) (p.getChildrenUnmodifiable().get(i)))) {
                     return true;
                 }
             } else {
-                if(!(p.getChildrenUnmodifiable().get(i) instanceof Bullet) &&
+                if (!(p.getChildrenUnmodifiable().get(i) instanceof Bullet) &&
                         getBoundsInParent().intersects(p.getChildrenUnmodifiable().get(i).getBoundsInParent()) &&
                         !p.getChildrenUnmodifiable().get(i).equals(this)) {
                     return true;
