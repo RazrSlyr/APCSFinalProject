@@ -31,24 +31,23 @@ public class Bullet extends ActorSphere {
     private Color currColor;
 
 
-
-
-    public Bullet(Vec3d position, Vec2d angle, double speed) {
+    public Bullet(double[] position, double[] angle, double speed) {
         super(0.1);
+        posX = position[0];
+        posY = position[1];
+        posZ = position[2];
 
         explosionStart = Color.YELLOW;
         explosionEnd = Color.RED;
         currColor = explosionStart;
-        posX = position.x;
-        posY = position.y;
-        posZ = position.z;
+
         setTranslateX(posX);
         setTranslateY(posY);
         setTranslateZ(posZ);
         hit = false;
 
-        angleX = angle.x;
-        angleY = angle.y;
+        angleX = angle[0];
+        angleY = angle[1];
 
         this.speed = speed;
 

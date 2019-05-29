@@ -41,7 +41,13 @@ TigerStar
 
 Jean-Luc Picard
 * Begin work on collisions, come up with basic first iteration of code for collisions.
+
 ## 5/25/19
 
 Bumbling Bingus
 * Started bullets. Bullet velocity is correct, but starting point needs some work
+
+## 5/28/19
+
+TigerStar
+* Finished Level 
