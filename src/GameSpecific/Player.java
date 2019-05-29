@@ -285,7 +285,7 @@ public class Player extends World {
             if(upReleased) {
                 System.out.println(camera.getBoundsInParent());
                 Bullet b = new Bullet(new double[]{positionX, positionY + 2, positionZ}, new double[]{rotateXAxis, rotateYAxis}, 1);
-                b.setMaterial(new PhongMaterial(Color.LIGHTCORAL));
+                b.setMaterial(new PhongMaterial(Color.BLACK));
 
                 getChildren().add(b);
 //                System.out.printf("Position: %f x, %f y, %f z\n", positionX, positionY, positionZ);
