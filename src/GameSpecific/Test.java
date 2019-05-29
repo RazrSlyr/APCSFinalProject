@@ -33,13 +33,14 @@ public class Test extends Application {
         world.getChildren().add(buildPointlight(0, -20, 0));
 
         world.getChildren().add(buildAmbientLight());
-        Group tree = buildTree();
+        Model tree = buildTree();
         tree.setTranslateX(5);
         world.getChildren().add(tree);
 
-        Group lightHouse = buildHouse();
+        Model lightHouse = buildHouse();
         lightHouse.setTranslateX(-20);
         world.getChildren().add(lightHouse);
+        System.out.println(lightHouse.getBoundsInParent());
 
         world.getChildren().add(floor);
 
@@ -106,10 +107,10 @@ public class Test extends Application {
         return floor;
     }
 
-    private Group buildTree() {
+    public Model buildTree(){
         ObjModelImporter objImporter = new ObjModelImporter();
 
-        Group tree = new Group();
+        Model tree = new Model();
         try {
             objImporter.read(getClass().getResource("../tree.obj"));
         } catch (Exception e) {
@@ -129,10 +130,10 @@ public class Test extends Application {
         return tree;
     }
 
-    private Group buildHouse() {
+    public Model buildHouse(){
         ObjModelImporter objImporter = new ObjModelImporter();
 
-        Group house = new Group();
+        Model house = new Model();
         try {
             objImporter.read(getClass().getResource("../house.obj"));
         } catch (Exception e) {
@@ -159,7 +160,8 @@ public class Test extends Application {
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(new Image(getClass().getResourceAsStream("../extraEpic.jpg")));
         box.setMaterial(material);
-        box.setTranslateX(6);
+        box.setTranslateX(10);
+        box.setTranslateY(-10);
 
         return box;
     }
@@ -167,7 +169,7 @@ public class Test extends Application {
     private Group buildGun() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
-        Group gun = new Group();
+        Model gun = new Model();
         try {
             objImporter.read(getClass().getResource("../KSR-29 sniper rifle new_obj.obj"));
         } catch (Exception e) {
