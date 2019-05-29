@@ -21,12 +21,14 @@ public class Test extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         primaryStage.setResizable(false);
 
         ActorBox floor = buildFloor();
 
-        Player world = new Player(010000000, 10100080); // replace this with a level object, and have the player be a group that implements actor
+        Level testLevel = new Level();
+
+        Player world = new Player(2097152, 10100080); // replace this with a level object, and have the player be a group that implements actor
         Group cameraGroup = buildCameraGroup(world); // Gun is built into camera group
         world.getChildren().add(buildPointlight(0, -20, 0));
 
@@ -51,7 +53,7 @@ public class Test extends Application {
         primaryStage.show();
     }
 
-    public Scene setupScene(Group group, Player world) {
+    private Scene setupScene(Group group, Player world) {
         Scene scene = new Scene(group, 800, 600, true);
         scene.setFill(Color.SKYBLUE);
         scene.setOnKeyPressed(event -> world.setKeyDown(event.getCode()));
@@ -61,7 +63,7 @@ public class Test extends Application {
         return scene;
     }
 
-    public Group setupSubscene(Player p) {
+    private Group setupSubscene(Player p) {
         SubScene subScene = new SubScene(p, 800, 600, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
         subScene.setCamera(p.getCamera());
@@ -72,14 +74,14 @@ public class Test extends Application {
         return group;
     }
 
-    public AmbientLight buildAmbientLight() {
+    private AmbientLight buildAmbientLight() {
         AmbientLight a = new AmbientLight();
         a.setColor(Color.LIGHTGOLDENRODYELLOW);
 
         return a;
     }
 
-    public PointLight buildPointlight(int translateX, int translateY, int translateZ) {
+    private PointLight buildPointlight(int translateX, int translateY, int translateZ) {
         PointLight p = new PointLight();
         p.setColor(Color.LIGHTGOLDENRODYELLOW);
 
@@ -90,7 +92,7 @@ public class Test extends Application {
         return p;
     }
 
-    public ActorBox buildFloor() {
+    private ActorBox buildFloor() {
         ActorBox floor = new Floor(100, 1, 100) {
             @Override
             public void act() {
@@ -104,7 +106,7 @@ public class Test extends Application {
         return floor;
     }
 
-    public Group buildTree() {
+    private Group buildTree() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
         Group tree = new Group();
@@ -127,7 +129,7 @@ public class Test extends Application {
         return tree;
     }
 
-    public Group buildHouse() {
+    private Group buildHouse() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
         Group house = new Group();
@@ -162,7 +164,7 @@ public class Test extends Application {
         return box;
     }
 
-    public Group buildGun() {
+    private Group buildGun() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
         Group gun = new Group();
@@ -199,7 +201,7 @@ public class Test extends Application {
         return gun;
     }
 
-    public Group buildCameraGroup(Player p) {
+    private Group buildCameraGroup(Player p) {
         PerspectiveCamera worldCamera = p.getCamera();
         worldCamera.setFarClip(5000.0);
         worldCamera.setNearClip(0.01);

@@ -66,7 +66,7 @@ public abstract class World extends Group {
     }
 
 
-    public <A extends Node & Actor> void add(A a) {
+    protected <A extends Node & Actor> void add(A a) {
         Class c = a.getClass();
         if (!actors.containsKey(c)) {
             ArrayList<A> arr = new ArrayList<>();
@@ -81,11 +81,11 @@ public abstract class World extends Group {
 
     }
 
-    public <A extends Node & Actor> void addAll(A... a) {
+    @SafeVarargs
+    protected final <A extends Node & Actor> void addAll(A... a) {
         Class c = a[0].getClass();
         if (!actors.containsKey(c)) {
-            ArrayList<A> arr = new ArrayList<>();
-            arr.addAll(Arrays.asList(a));
+            ArrayList<A> arr = new ArrayList<>(Arrays.asList(a));
 
         } else {
             actors.get(c).add(a);
@@ -117,7 +117,7 @@ public abstract class World extends Group {
         actTimer.stop();
     }
 
-    public boolean isKeyDown(KeyCode c) {
+    protected boolean isKeyDown(KeyCode c) {
         return keyCodes.contains(c);
     }
 

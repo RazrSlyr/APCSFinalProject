@@ -31,17 +31,14 @@ public class Player extends World {
     private Robot r;
 
 
-    private boolean inAir = false;
     private double speedX, speedZ;
     private double oldX;
     private double oldZ;
     private boolean upReleased;
 
-    private ActorBox gun;
-
     private boolean wasInAir = false;
     private int counter = 0;
-    private  double originalY = 0;
+    private double originalY = 0;
 
     private boolean firstTime = true;
     private int counterSpace = 0;
@@ -73,7 +70,7 @@ public class Player extends World {
         camera.setRotationAxis(new Point3D(0, 1, 0));
     }
 
-    public Player(double width, double height) {
+    Player(double width, double height) {
 //        super(width, height);
         //light = new AmbientLight(Color.LIGHTGOLDENRODYELLOW);
         bounds = getBounds();
@@ -98,7 +95,7 @@ public class Player extends World {
         camera.getTransforms().addAll(
                 new Rotate(0, Rotate.Y_AXIS),
                 new Rotate(0, Rotate.X_AXIS),
-                new Translate(0, -2 , 0));
+                new Translate(0, -2, 0));
         cameraGroup = new Group(camera);
         cameraGroup.getTransforms().addAll(
                 new Rotate(0, Rotate.X_AXIS)
@@ -106,7 +103,7 @@ public class Player extends World {
         camera.setRotationAxis(new Point3D(0, 1, 0));
         //getChildren().add(light);
 
-        gun = new ActorBox(0.5,0.5,5) {
+        ActorBox gun = new ActorBox(0.5, 0.5, 5) {
             @Override
             public void act() {
 
@@ -129,7 +126,7 @@ public class Player extends World {
 
     }
 
-    public void setCameraGroup(Group g) {
+    void setCameraGroup(Group g) {
         cameraGroup = g;
         cameraGroup.getTransforms().addAll(
                 new Rotate(0, Rotate.X_AXIS)
@@ -137,7 +134,7 @@ public class Player extends World {
         camera.setRotationAxis(new Point3D(0, 1, 0));
     }
 
-    public void addCameraGroupToWorld() {
+    void addCameraGroupToWorld() {
         getChildren().add(cameraGroup);
     }
 
@@ -150,17 +147,17 @@ public class Player extends World {
 
         System.out.println(speedX);
 
-        inAir = isKeyDown(KeyCode.SPACE);
+        boolean inAir = isKeyDown(KeyCode.SPACE);
 
         if (!inAir) {
 
-            if(wasInAir) {
-                if(originalY > positionY) {
+            if (wasInAir) {
+                if (originalY > positionY) {
                     positionY += 0.75;
                     cameraGroup.setTranslateY(positionY);
                     System.out.println("Position Y aFTer jump = " + positionY);
                     //wasInAir = true;
-                    counter ++;
+                    counter++;
                 } else {
                     wasInAir = false;
                     counter = 0;
@@ -172,7 +169,7 @@ public class Player extends World {
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
 
-                if(isColliding()){
+                if (isColliding()) {
                     positionZ -= .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
                     positionX -= .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
                     cameraGroup.setTranslateZ(positionZ);
@@ -201,7 +198,7 @@ public class Player extends World {
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
 
-                if(isColliding()){
+                if (isColliding()) {
                     positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
                     positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
                     cameraGroup.setTranslateZ(positionZ);
@@ -215,7 +212,7 @@ public class Player extends World {
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
 
-                if(isColliding()){
+                if (isColliding()) {
                     positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
                     positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
                     cameraGroup.setTranslateZ(positionZ);
@@ -228,7 +225,7 @@ public class Player extends World {
 
             double currentY = positionY;
 
-            if(firstTime) {
+            if (firstTime) {
                 firstTime = false;
 
                 originalY = positionY;
@@ -269,7 +266,7 @@ public class Player extends World {
             mouseY = newMouseY;
         }
 
-        if(mouseX >= bounds[0] * 0.99 || mouseX <= bounds[0] * 0.01 || mouseY >= bounds[1] * 0.99 || mouseY <= bounds[1] * 0.01) {
+        if (mouseX >= bounds[0] * 0.99 || mouseX <= bounds[0] * 0.01 || mouseY >= bounds[1] * 0.99 || mouseY <= bounds[1] * 0.01) {
             moveMouse(bounds[0] / 2, bounds[1] / 2);
             mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX();
             mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
@@ -281,8 +278,8 @@ public class Player extends World {
         oldX = positionX;
         oldZ = positionZ;
 
-        if(isKeyDown(KeyCode.UP)) {
-            if(upReleased) {
+        if (isKeyDown(KeyCode.UP)) {
+            if (upReleased) {
                 System.out.println(camera.getBoundsInParent());
                 Bullet b = new Bullet(new double[]{positionX, positionY + 2, positionZ}, new double[]{rotateXAxis, rotateYAxis}, 1);
                 b.setMaterial(new PhongMaterial(Color.LIGHTCORAL));
@@ -298,11 +295,10 @@ public class Player extends World {
     }
 
 
-
-    public boolean isColliding(){
-        for(Node n : getChildren()){
-            if(!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)){
-                if(n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent()) && !(n instanceof Floor)){
+    private boolean isColliding() {
+        for (Node n : getChildren()) {
+            if (!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
+                if (n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent()) && !(n instanceof Floor)) {
                     return true;
                 }
             }
@@ -311,11 +307,11 @@ public class Player extends World {
         return false;
     }
 
-    public PerspectiveCamera getCamera() {
+    PerspectiveCamera getCamera() {
         return camera;
     }
 
-    public void moveMouse(int x, int y) {
+    private void moveMouse(int x, int y) {
         r.mouseMove(x, y);
     }
 
@@ -324,7 +320,7 @@ public class Player extends World {
     }
 
 
-    public int[] getBounds() {
+    private int[] getBounds() {
         Rectangle r = MouseInfo.getPointerInfo().getDevice().getConfigurations()[0].getBounds();
         return new int[]{r.width, r.height};
     }

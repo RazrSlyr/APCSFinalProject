@@ -35,8 +35,8 @@ public class Bullet extends ActorSphere {
 
     }
 
-    public World getWorld() {
-        return (World)(getParent());
+    private World getWorld() {
+        return (World) (getParent());
     }
 
     @Override
@@ -53,21 +53,21 @@ public class Bullet extends ActorSphere {
         setTranslateY(posY);
         setTranslateZ(posZ);
 
-        if(time > 5000) {
+        if (time > 5000) {
             w.remove(this);
         }
     }
 
-    public double getSpeedX() {
+    double getSpeedX() {
         return Math.sin(angleY / 180 * Math.PI) * speed;
     }
 
-    public double getSpeedY() {
+    double getSpeedY() {
         return -Math.sin(angleX / 180 * Math.PI) * speed;
     }
 
-    public double getSpeedZ() {
-        return  Math.cos(angleY / 180 * Math.PI) * speed;
+    double getSpeedZ() {
+        return Math.cos(angleY / 180 * Math.PI) * speed;
     }
 
     private Parent getTopParent() {
@@ -81,12 +81,10 @@ public class Bullet extends ActorSphere {
 
     private boolean isIntersectingObjectInParent(Parent p) {
         for (int i = 0; i < p.getChildrenUnmodifiable().size(); i++) {
-            if(p.getChildrenUnmodifiable().get(i) instanceof Parent) {
-                if(isIntersectingObjectInParent((Parent)(p.getChildrenUnmodifiable().get(i)))) {
+            if (p.getChildrenUnmodifiable().get(i) instanceof Parent) {
+                if (isIntersectingObjectInParent((Parent) (p.getChildrenUnmodifiable().get(i)))) {
                     return true;
                 }
-            } else {
-
             }
         }
         return false;

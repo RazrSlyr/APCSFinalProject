@@ -52,6 +52,7 @@ public class Level extends World {
     public void addAll(Platform... platform) {
         super.addAll(platform);
     }
+
     public int getNumHit() {
         int count = 0;
         for (Target target : targets) {
