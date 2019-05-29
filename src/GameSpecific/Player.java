@@ -150,7 +150,7 @@ public class Player extends World {
         double newMouseY = MouseInfo.getPointerInfo().getLocation().getY();
 
 
-        System.out.println(speedX);
+       // System.out.println(speedX);
 
         inAir = isKeyDown(KeyCode.SPACE);
 
@@ -160,7 +160,7 @@ public class Player extends World {
                 if(originalY > positionY) {
                     positionY += 0.75;
                     cameraGroup.setTranslateY(positionY);
-                    System.out.println("Position Y aFTer jump = " + positionY);
+               //     System.out.println("Position Y aFTer jump = " + positionY);
                     //wasInAir = true;
                     counter ++;
                 } else {
@@ -242,7 +242,7 @@ public class Player extends World {
             positionX += speedX;
             positionZ += speedZ;
 
-            System.out.println("Position Y in Jump = " + positionY);
+           // System.out.println("Position Y in Jump = " + positionY);
 
             cameraGroup.setTranslateY(positionY);
             cameraGroup.setTranslateX(positionX);
@@ -286,11 +286,10 @@ public class Player extends World {
         if(isKeyDown(KeyCode.UP)) {
             if(upReleased) {
                 Bullet b = new Bullet(new Vec3d(positionX, positionY, positionZ), new Vec2d(rotateXAxis, rotateYAxis), 1);
-                b.setMaterial(new PhongMaterial(Color.LIGHTCORAL));
                 getChildren().add(b);
-                System.out.printf("Position: %f x, %f y, %f z\n", positionX, positionY, positionZ);
-                System.out.printf("Angle: %f x, %f y\n", rotateXAxis, rotateYAxis);
-                System.out.printf("Bullet Speed: %f x, %f y, %f z\n", b.getSpeedX(), b.getSpeedY(), b.getSpeedZ());
+//                System.out.printf("Position: %f x, %f y, %f z\n", positionX, positionY, positionZ);
+//                System.out.printf("Angle: %f x, %f y\n", rotateXAxis, rotateYAxis);
+//                System.out.printf("Bullet Speed: %f x, %f y, %f z\n", b.getSpeedX(), b.getSpeedY(), b.getSpeedZ());
                 upReleased = false;
             }
         } else {
