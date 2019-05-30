@@ -51,3 +51,10 @@ Bumbling Bingus
 
 TigerStar
 * Finished Level 
+
+## 5/29/19
+
+Bumbling Bingus
+* Added explosion effect to bullet 
+* Changed jumping to be based on gravity and velocity
+* Added ground checker to allow for landing on things that aren't platforms
