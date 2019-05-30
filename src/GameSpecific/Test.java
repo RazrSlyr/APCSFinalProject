@@ -104,6 +104,8 @@ public class Test extends Application {
         floor.setMaterial(new PhongMaterial(Color.SANDYBROWN));
         floor.setTranslateY(3);
 
+        System.out.println(floor.getBoundsInParent());
+
         return floor;
     }
 
@@ -126,6 +128,7 @@ public class Test extends Application {
 
         System.out.println(treeMeshViews.length);
         tree.getChildren().addAll(treeMeshViews);
+        tree.setTranslateX(0);
 
         return tree;
     }

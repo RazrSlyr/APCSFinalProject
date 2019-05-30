@@ -1,7 +1,9 @@
 package GameSpecific;
 
+import Structure.Actor;
 import Structure.ActorBox;
 import Structure.World;
+import javafx.geometry.BoundingBox;
 import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
@@ -10,6 +12,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
@@ -30,10 +33,12 @@ public class Player extends World {
     private double mouseY;
     private Robot r;
 
+    private Box groundCheck;
 
-    private double speedX, speedZ;
-    private double oldX;
-    private double oldZ;
+
+    private double speedX, speedZ, speedY;
+    private final double GRAVITY = 25;
+
     private boolean upReleased;
 
     private boolean wasInAir = false;
@@ -70,7 +75,7 @@ public class Player extends World {
         camera.setRotationAxis(new Point3D(0, 1, 0));
     }
 
-    Player(double width, double height) {
+    public Player(double width, double height) {
 //        super(width, height);
         //light = new AmbientLight(Color.LIGHTGOLDENRODYELLOW);
         bounds = getBounds();
@@ -116,8 +121,16 @@ public class Player extends World {
         gun.setMaterial(new PhongMaterial(Color.RED));
         gun.setRotationAxis(Rotate.Y_AXIS);
         gun.setRotate(-5);
+        groundCheck = new Box(1, 1, 1);
 
         cameraGroup.getChildren().add(gun);
+        cameraGroup.getChildren().add(groundCheck);
+        cameraGroup.setTranslateZ(-10);
+        cameraGroup.setTranslateX(-10);
+        positionZ = -10;
+        positionX = -10;
+        groundCheck.setMaterial(new PhongMaterial(Color.WHITE));
+        groundCheck.setTranslateY(0.5);
 
         camera.setTranslateX(0);
         camera.setTranslateY(0);
@@ -132,6 +145,12 @@ public class Player extends World {
                 new Rotate(0, Rotate.X_AXIS)
         );
         camera.setRotationAxis(new Point3D(0, 1, 0));
+        cameraGroup.getChildren().add(groundCheck);
+        groundCheck.setTranslateY(3);
+        cameraGroup.setTranslateZ(-10);
+        cameraGroup.setTranslateX(-10);
+        positionZ = -5;
+        positionX = -5;
     }
 
     void addCameraGroupToWorld() {
@@ -144,14 +163,23 @@ public class Player extends World {
         double newMouseX = MouseInfo.getPointerInfo().getLocation().getX();
         double newMouseY = MouseInfo.getPointerInfo().getLocation().getY();
 
+        double oldX = positionX;
+        double oldZ = positionZ;
+
 
        // System.out.println(speedX);
 
-        boolean inAir = isKeyDown(KeyCode.SPACE);
+        //boolean inAir = isKeyDown(KeyCode.SPACE);
 
-        if (!inAir) {
+        if (isGrounded()) {
 
-            if (wasInAir) {
+            if(speedY > 0) {
+                speedY = 0;
+            } else if(isKeyDown(KeyCode.SPACE)) {
+                speedY = -25;
+            }
+
+/*            if (wasInAir) {
                 if (originalY > positionY) {
                     positionY += 0.75;
                     cameraGroup.setTranslateY(positionY);
@@ -162,8 +190,8 @@ public class Player extends World {
                     wasInAir = false;
                     counter = 0;
                 }
-            }
-            if (isKeyDown(KeyCode.A)) {
+            }*/
+/*            if (isKeyDown(KeyCode.A)) {
                 positionZ += .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
                 positionX += .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
                 cameraGroup.setTranslateZ(positionZ);
@@ -220,10 +248,13 @@ public class Player extends World {
                 }
             }
 
+            speedX = (positionX - oldX) / deltaTime();
+            speedZ = (positionZ - oldZ) / deltaTime();*/
+
         } else {
             //in air, can't move keys, but can look
 
-            double currentY = positionY;
+            /*double currentY = positionY;
 
             if (firstTime) {
                 firstTime = false;
@@ -243,7 +274,18 @@ public class Player extends World {
             cameraGroup.setTranslateX(positionX);
             cameraGroup.setTranslateZ(positionZ);
             wasInAir = true;
-            inAir = false;
+//            inAir = false;*/
+/*
+            positionX += speedX * deltaTime();
+            positionZ += speedZ * deltaTime();
+
+
+
+            cameraGroup.setTranslateX(positionX);
+            cameraGroup.setTranslateZ(positionZ);*/
+
+            speedY += GRAVITY * deltaTime() / 1000;
+
         }
         if (newMouseX != mouseX) {
             rotateYAxis += ((newMouseX - mouseX) / 5);
@@ -266,22 +308,78 @@ public class Player extends World {
             mouseY = newMouseY;
         }
 
+        if (isKeyDown(KeyCode.A)) {
+            positionZ += .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+            positionX += .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
+            cameraGroup.setTranslateZ(positionZ);
+            cameraGroup.setTranslateX(positionX);
+
+            if (isColliding()) {
+                positionZ -= .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+                positionX -= .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+            }
+
+        }
+
+        if (isKeyDown(KeyCode.D)) {
+            positionZ += .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+            positionX += .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+            cameraGroup.setTranslateZ(positionZ);
+            cameraGroup.setTranslateX(positionX);
+
+            if (isColliding()) {
+                positionZ -= .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+                positionX -= .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+            }
+        }
+
+        if (isKeyDown(KeyCode.W)) {
+            positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+            positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+            cameraGroup.setTranslateZ(positionZ);
+            cameraGroup.setTranslateX(positionX);
+
+            if (isColliding()) {
+                positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+            }
+        }
+
+        if (isKeyDown(KeyCode.S)) {
+            positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+            positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+            cameraGroup.setTranslateZ(positionZ);
+            cameraGroup.setTranslateX(positionX);
+
+            if (isColliding()) {
+                positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+            }
+        }
+
+        speedX = (positionX - oldX) / deltaTime();
+        speedZ = (positionZ - oldZ) / deltaTime();
+
         if (mouseX >= bounds[0] * 0.99 || mouseX <= bounds[0] * 0.01 || mouseY >= bounds[1] * 0.99 || mouseY <= bounds[1] * 0.01) {
             moveMouse(bounds[0] / 2, bounds[1] / 2);
             mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX();
             mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
         }
 
-        speedX = (positionX - oldX) / deltaTime();
-        speedZ = (positionZ - oldZ) / deltaTime();
 
-        oldX = positionX;
-        oldZ = positionZ;
+
 
         if (isKeyDown(KeyCode.UP)) {
             if (upReleased) {
-                System.out.println(camera.getBoundsInParent());
-                Bullet b = new Bullet(new double[]{positionX, positionY + 2, positionZ}, new double[]{rotateXAxis, rotateYAxis}, 1);
+                Bullet b = new Bullet(new double[]{positionX, positionY + 2, positionZ}, new double[]{rotateXAxis, rotateYAxis}, 5);
                 b.setMaterial(new PhongMaterial(Color.BLACK));
 
                 getChildren().add(b);
@@ -293,12 +391,44 @@ public class Player extends World {
         } else {
             upReleased = true;
         }
+        positionY += speedY * deltaTime() / 1000;
+        cameraGroup.setTranslateY(positionY);
+
+
+        if(positionY > 10) {
+            positionY = -5;
+            positionX = -5;
+            positionZ = -5;
+            cameraGroup.setTranslateX(positionX);
+            cameraGroup.setTranslateY(positionY);
+            cameraGroup.setTranslateZ(positionZ);
+
+        }
     }
 
+    public boolean isGrounded() {
+        BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX,
+                groundCheck.getBoundsInParent().getMinY() + positionY,
+                groundCheck.getBoundsInParent().getMinZ() + positionZ,
+                groundCheck.getWidth(),
+                groundCheck.getHeight(),
+                groundCheck.getDepth());
+
+        for (Node n : getChildren()) {
+            if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
+                if (b.intersects(n.getBoundsInParent())) {
+                    speedY = 0;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     private boolean isColliding() {
         for (Node n : getChildren()) {
-            if (!(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
+            if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
                 if (n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent()) && !(n instanceof Floor)) {
                     return true;
                 }
