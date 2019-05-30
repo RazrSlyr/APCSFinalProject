@@ -167,7 +167,7 @@ public class Player extends World {
         double oldZ = positionZ;
 
 
-       // System.out.println(speedX);
+        // System.out.println(speedX);
 
         //boolean inAir = isKeyDown(KeyCode.SPACE);
 
@@ -183,7 +183,7 @@ public class Player extends World {
                 if (originalY > positionY) {
                     positionY += 0.75;
                     cameraGroup.setTranslateY(positionY);
-               //     System.out.println("Position Y aFTer jump = " + positionY);
+                    //     System.out.println("Position Y aFTer jump = " + positionY);
                     //wasInAir = true;
                     counter++;
                 } else {
@@ -268,7 +268,7 @@ public class Player extends World {
             positionX += speedX;
             positionZ += speedZ;
 
-           // System.out.println("Position Y in Jump = " + positionY);
+            // System.out.println("Position Y in Jump = " + positionY);
 
             cameraGroup.setTranslateY(positionY);
             cameraGroup.setTranslateX(positionX);

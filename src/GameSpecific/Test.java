@@ -109,7 +109,7 @@ public class Test extends Application {
         return floor;
     }
 
-    public Model buildTree(){
+    private Model buildTree() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
         Model tree = new Model();
@@ -133,7 +133,7 @@ public class Test extends Application {
         return tree;
     }
 
-    public Model buildHouse(){
+    private Model buildHouse() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
         Model house = new Model();
