@@ -3,7 +3,7 @@
 ## Preface
 
 Group includes Rohan Venkatapuram (Bumbing Bingus), Ashish Rao (Jean-Luc Picard), Amartya Bhattacharya (TigerStar), and 
-Siddharth Vishwanathan (Shadowclaw Epic Styl). 
+Siddarth Vishwanathan (Shadowclaw Epic Styl). 
 Game being built is a 3D first-person shooter game which allows for players to use traditional weaponry 
 and also a portal gun similar to the popular game 'Portal' to take out targets.
 
@@ -28,12 +28,16 @@ First whole group meeting. Discussed plan for development, and distributed tasks
 Bumbing Bingus
 * Added deltaTime() to world to help with movement calculations
 
+Shadowclaw Epic Styl
+* Added variables required for original jump, xVelocity and zVelocity
 ## 5/22/19
 
 TigerStar
 * Set up Level class
 * Made Platforms
 
+Shadowclaw Epic Styl
+* Finished original jump, slowed down jump downwards linearly
 ## 5/24/19
 
 TigerStar
