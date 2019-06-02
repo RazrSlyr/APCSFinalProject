@@ -30,6 +30,7 @@ public class Player extends World {
     private AmbientLight light;
     private int[] bounds;
     private double mouseX;
+
     private double mouseY;
     private Robot r;
 
