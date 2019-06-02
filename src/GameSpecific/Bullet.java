@@ -51,7 +51,12 @@ public class Bullet extends ActorSphere {
     }
 
     private World getWorld() {
-        return (World) (getParent());
+        Parent p = getParent();
+        while(!(p instanceof World)) {
+            p = p.getParent();
+        }
+
+        return (World)p;
     }
 
     @Override

@@ -1,24 +1,21 @@
 package GameSpecific;
 
-import Structure.ActorAgent;
 import Structure.ActorBox;
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.geometry.Point3D;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.MeshView;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-public class Test extends Application {
+public class TestWL extends Application {
 
     /**
      * Java main for when running without JavaFX launcher
@@ -33,67 +30,67 @@ public class Test extends Application {
 
         ActorBox floor = buildFloor();
 
-        Level testLevel = new Level();
+        Group cameraGroup = new Group();
 
-        Player world = new Player(2097152, 10100080); // replace this with a level object, and have the player be a group that implements actor
-        Group cameraGroup = buildCameraGroup(world); // Gun is built into camera group
-        world.getChildren().add(buildPointlight(0, -20, 0));
+        LevelWL testLevel = new LevelWL();
+        testLevel.setCameraGroup(cameraGroup);
 
-        world.getChildren().add(buildAmbientLight());
+        PlayerWL player = new PlayerWL(1337, 1337, testLevel); // replace this with a level object, and have the player be a group that implements actor
+
+        testLevel.setPlayer(player);
+
+        cameraGroup = buildCameraGroup(player);
+        testLevel.setCameraGroup(cameraGroup);
+        player.setCameraGroup(cameraGroup);
+        testLevel.addCameraGroupToWorld();
+
+        testLevel.getChildren().add(buildPointlight(0, -20, 0));
+
+        testLevel.getChildren().add(buildAmbientLight());
         Model tree = buildTree();
         tree.setTranslateX(5);
-        world.getChildren().add(tree);
+        testLevel.getChildren().add(tree);
 
         Model lightHouse = buildHouse();
         lightHouse.setTranslateX(-20);
-        world.getChildren().add(lightHouse);
+        testLevel.getChildren().add(lightHouse);
         System.out.println(lightHouse.getBoundsInParent());
 
-        world.getChildren().add(floor);
+        testLevel.getChildren().add(floor);
 
-        Group group = setupSubscene(world);
-        Scene scene = setupScene(group, world);
-
-        world.setCameraGroup(cameraGroup);
-        world.addCameraGroupToWorld();
+        Group group = setupSubscene(testLevel);
+        Scene scene = setupScene(group, testLevel);
 
         addCrosshairs(group);
 
+
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        testLevel.start();
     }
 
-    private void addCrosshairs(Group g){
-        Image crossImg = new Image(getClass().getResourceAsStream("../crosshairs.png"));
-        ImageView cross = new ImageView(crossImg);
-        cross.setPreserveRatio(true);
-        cross.setFitWidth(50);
-        cross.setFitHeight(50);
-
-        g.getChildren().add(cross);
-        cross.setTranslateX(1920/2 - (cross.getBoundsInParent().getWidth()/2));
-        cross.setTranslateY(1080/2 - (cross.getBoundsInParent().getHeight()/2));
-    }
-
-    private Scene setupScene(Group group, Player world) {
+    private Scene setupScene(Group group, LevelWL l) {
         Scene scene = new Scene(group, 800, 600, true);
         scene.setFill(Color.SKYBLUE);
-        scene.setOnKeyPressed(event -> world.setKeyDown(event.getCode()));
-        scene.setOnKeyReleased(event -> world.setKeyUp(event.getCode()));
-        scene.setOnMousePressed(event -> world.setMouseClicked(true));
-        scene.setOnMouseReleased(event -> world.setMouseClicked(false));
+        scene.setOnKeyPressed(event -> l.setKeyDown(event.getCode()));
+        scene.setOnKeyReleased(event -> l.setKeyUp(event.getCode()));
+        scene.setOnMousePressed(event -> l.setMouseClicked(true));
+        scene.setOnMouseReleased(event -> l.setMouseClicked(false));
+        scene.setOnMouseExited(event -> l.getPlayer().moveMouse(1500, 1000));
         scene.setCursor(Cursor.NONE);
 
         return scene;
+
     }
 
-    private Group setupSubscene(Player p) {
-        SubScene subScene = new SubScene(p, 800, 600, true, SceneAntialiasing.BALANCED);
+    private Group setupSubscene(LevelWL l) {
+        SubScene subScene = new SubScene(l, 800, 600, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
-        subScene.setCamera(p.getCamera());
+        subScene.setCamera(l.getPlayer().getCamera());
         Group group = new Group();
         group.getChildren().add(subScene);
-        p.start();
+        l.start();
 
         return group;
     }
@@ -117,7 +114,7 @@ public class Test extends Application {
     }
 
     private ActorBox buildFloor() {
-        ActorBox floor = new Floor(500, 1, 500) {
+        ActorBox floor = new Floor(100, 1, 100) {
             @Override
             public void act() {
 
@@ -172,6 +169,26 @@ public class Test extends Application {
         return house;
     }
 
+    public ActorBox buildExtraEpic() {
+        ActorBox box = new ActorBox(5, 5, 5) {
+            private int rotate = 0;
+
+            @Override
+            public void act() {
+                setRotate(rotate + 1);
+                rotate++;
+            }
+        };
+
+        PhongMaterial material = new PhongMaterial();
+        material.setDiffuseMap(new Image(getClass().getResourceAsStream("../extraEpic.jpg")));
+        box.setMaterial(material);
+        box.setTranslateX(10);
+        box.setTranslateY(-10);
+
+        return box;
+    }
+
     private Group buildGun() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
@@ -206,19 +223,36 @@ public class Test extends Application {
         gun.setRotationAxis(Rotate.Y_AXIS);
         gun.setRotate(-95);
 
-        gun.getTransforms().add(new Rotate(-2, Rotate.Z_AXIS));
-
         return gun;
     }
 
-    private Group buildCameraGroup(Player p) {
+    private Group buildCameraGroup(PlayerWL p) {
         PerspectiveCamera worldCamera = p.getCamera();
         worldCamera.setFarClip(5000.0);
         worldCamera.setNearClip(0.01);
 
+//        PointLight pLight = new PointLight();
+//        pLight.translateXProperty().bind(worldCamera.translateXProperty());
+//        pLight.translateYProperty().bind(worldCamera.translateYProperty());
+//        pLight.translateZProperty().bind(worldCamera.translateZProperty());
+
+        worldCamera.setRotationAxis(new Point3D(0, 1, 0));
         Group cameraGroup = new Group(buildGun(), worldCamera);
         cameraGroup.setRotationAxis(Rotate.Y_AXIS);
 
         return cameraGroup;
     }
+
+    private void addCrosshairs(Group g) {
+        Image crossImg = new Image(getClass().getResourceAsStream("../crosshairs.png"));
+        ImageView cross = new ImageView(crossImg);
+        cross.setPreserveRatio(true);
+        cross.setFitWidth(50);
+        cross.setFitHeight(50);
+
+        g.getChildren().add(cross);
+        cross.setTranslateX(800 / 2 - (cross.getBoundsInParent().getWidth() / 2));
+        cross.setTranslateY(600 / 2 - (cross.getBoundsInParent().getHeight() / 2));
+    }
+
 }

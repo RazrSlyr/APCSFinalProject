@@ -118,7 +118,7 @@ public abstract class World extends Group {
         actTimer.stop();
     }
 
-    protected boolean isKeyDown(KeyCode c) {
+    public boolean isKeyDown(KeyCode c) {
         return keyCodes.contains(c);
     }
 
