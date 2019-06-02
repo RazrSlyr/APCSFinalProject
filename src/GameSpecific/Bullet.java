@@ -25,7 +25,7 @@ public class Bullet extends ActorSphere {
 
 
     public Bullet(double[] position, double[] angle, double speed) {
-        super(0.01);
+        super(0.1);
         posX = position[0];
         posY = position[1];
         posZ = position[2];
@@ -64,7 +64,7 @@ public class Bullet extends ActorSphere {
             posX += getSpeedX();
             posY += getSpeedY();
             posZ += getSpeedZ();
-
+//
             setTranslateX(posX);
             setTranslateY(posY);
             setTranslateZ(posZ);

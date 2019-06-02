@@ -28,6 +28,9 @@ First whole group meeting. Discussed plan for development, and distributed tasks
 Bumbing Bingus
 * Added deltaTime() to world to help with movement calculations
 
+Jean-Luc Picard
+* Worked on creating 3D models of a tree and a house in Blender. 
+
 ## 5/22/19
 
 TigerStar
@@ -46,6 +49,9 @@ Jean-Luc Picard
 
 Bumbling Bingus
 * Started bullets. Bullet velocity is correct, but starting point needs some work
+
+Jean-Luc Picard
+* Further refinement of collision code, and edits to enable jumping on platforms.
 
 ## 5/28/19
 

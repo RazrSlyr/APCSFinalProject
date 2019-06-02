@@ -166,126 +166,14 @@ public class Player extends World {
         double oldX = positionX;
         double oldZ = positionZ;
 
-
-        // System.out.println(speedX);
-
-        //boolean inAir = isKeyDown(KeyCode.SPACE);
-
         if (isGrounded()) {
-
             if(speedY > 0) {
                 speedY = 0;
             } else if(isKeyDown(KeyCode.SPACE)) {
                 speedY = -25;
             }
-
-/*            if (wasInAir) {
-                if (originalY > positionY) {
-                    positionY += 0.75;
-                    cameraGroup.setTranslateY(positionY);
-                    //     System.out.println("Position Y aFTer jump = " + positionY);
-                    //wasInAir = true;
-                    counter++;
-                } else {
-                    wasInAir = false;
-                    counter = 0;
-                }
-            }*/
-/*            if (isKeyDown(KeyCode.A)) {
-                positionZ += .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
-                positionX += .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
-                cameraGroup.setTranslateZ(positionZ);
-                cameraGroup.setTranslateX(positionX);
-
-                if (isColliding()) {
-                    positionZ -= .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
-                    positionX -= .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
-                    cameraGroup.setTranslateZ(positionZ);
-                    cameraGroup.setTranslateX(positionX);
-                }
-
-            }
-
-            if (isKeyDown(KeyCode.D)) {
-                positionZ += .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
-                positionX += .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
-                cameraGroup.setTranslateZ(positionZ);
-                cameraGroup.setTranslateX(positionX);
-
-                if (isColliding()) {
-                    positionZ -= .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
-                    positionX -= .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
-                    cameraGroup.setTranslateZ(positionZ);
-                    cameraGroup.setTranslateX(positionX);
-                }
-            }
-
-            if (isKeyDown(KeyCode.W)) {
-                positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-                cameraGroup.setTranslateZ(positionZ);
-                cameraGroup.setTranslateX(positionX);
-
-                if (isColliding()) {
-                    positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                    positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-                    cameraGroup.setTranslateZ(positionZ);
-                    cameraGroup.setTranslateX(positionX);
-                }
-            }
-
-            if (isKeyDown(KeyCode.S)) {
-                positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-                cameraGroup.setTranslateZ(positionZ);
-                cameraGroup.setTranslateX(positionX);
-
-                if (isColliding()) {
-                    positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                    positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-                    cameraGroup.setTranslateZ(positionZ);
-                    cameraGroup.setTranslateX(positionX);
-                }
-            }
-
-            speedX = (positionX - oldX) / deltaTime();
-            speedZ = (positionZ - oldZ) / deltaTime();*/
-
         } else {
-            //in air, can't move keys, but can look
-
-            /*double currentY = positionY;
-
-            if (firstTime) {
-                firstTime = false;
-
-                originalY = positionY;
-            }
-
-
-            positionY -= 5;
-
-            positionX += speedX;
-            positionZ += speedZ;
-
-            // System.out.println("Position Y in Jump = " + positionY);
-
-            cameraGroup.setTranslateY(positionY);
-            cameraGroup.setTranslateX(positionX);
-            cameraGroup.setTranslateZ(positionZ);
-            wasInAir = true;
-//            inAir = false;*/
-/*
-            positionX += speedX * deltaTime();
-            positionZ += speedZ * deltaTime();
-
-
-
-            cameraGroup.setTranslateX(positionX);
-            cameraGroup.setTranslateZ(positionZ);*/
-
             speedY += GRAVITY * deltaTime() / 1000;
-
         }
         if (newMouseX != mouseX) {
             rotateYAxis += ((newMouseX - mouseX) / 5);
@@ -309,14 +197,14 @@ public class Player extends World {
         }
 
         if (isKeyDown(KeyCode.A)) {
-            positionZ += .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
-            positionX += .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
+            positionZ += .25 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+            positionX += .25 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
             cameraGroup.setTranslateZ(positionZ);
             cameraGroup.setTranslateX(positionX);
 
             if (isColliding()) {
-                positionZ -= .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
-                positionX -= .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
+                positionZ -= .25 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+                positionX -= .25 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
             }
@@ -324,42 +212,42 @@ public class Player extends World {
         }
 
         if (isKeyDown(KeyCode.D)) {
-            positionZ += .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
-            positionX += .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+            positionZ += .25 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+            positionX += .25 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
             cameraGroup.setTranslateZ(positionZ);
             cameraGroup.setTranslateX(positionX);
 
             if (isColliding()) {
-                positionZ -= .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
-                positionX -= .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+                positionZ -= .25 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+                positionX -= .25 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
             }
         }
 
         if (isKeyDown(KeyCode.W)) {
-            positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-            positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+            positionZ += .25 * Math.cos(rotateYAxis / 180 * Math.PI);
+            positionX += .25 * Math.sin(rotateYAxis / 180 * Math.PI);
             cameraGroup.setTranslateZ(positionZ);
             cameraGroup.setTranslateX(positionX);
 
             if (isColliding()) {
-                positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                positionZ -= .25 * Math.cos(rotateYAxis / 180 * Math.PI);
+                positionX -= .25 * Math.sin(rotateYAxis / 180 * Math.PI);
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
             }
         }
 
         if (isKeyDown(KeyCode.S)) {
-            positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-            positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+            positionZ -= .25 * Math.cos(rotateYAxis / 180 * Math.PI);
+            positionX -= .25 * Math.sin(rotateYAxis / 180 * Math.PI);
             cameraGroup.setTranslateZ(positionZ);
             cameraGroup.setTranslateX(positionX);
 
             if (isColliding()) {
-                positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                positionZ += .25 * Math.cos(rotateYAxis / 180 * Math.PI);
+                positionX += .25 * Math.sin(rotateYAxis / 180 * Math.PI);
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
             }
@@ -374,18 +262,16 @@ public class Player extends World {
             mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
         }
 
-
-
-
-        if (isKeyDown(KeyCode.UP)) {
+        if (isMouseClicked()) {
             if (upReleased) {
-                Bullet b = new Bullet(new double[]{positionX, positionY + 2, positionZ}, new double[]{rotateXAxis, rotateYAxis}, 5);
+                Bullet b = new Bullet(new double[]{positionX + 0.6*Math.sin(rotateYAxis * Math.PI / 360),
+                        camera.getBoundsInParent().getMinY() + positionY - (cameraGroup.getBoundsInParent().getHeight()*Math.sin(rotateXAxis * Math.PI / 180)/2),
+                        positionZ + 2.6}, new double[]{rotateXAxis, rotateYAxis}, 5);
                 b.setMaterial(new PhongMaterial(Color.BLACK));
 
+                System.out.println(rotateXAxis);
+
                 getChildren().add(b);
-//                System.out.printf("Position: %f x, %f y, %f z\n", positionX, positionY, positionZ);
-//                System.out.printf("Angle: %f x, %f y\n", rotateXAxis, rotateYAxis);
-//                System.out.printf("Bullet Speed: %f x, %f y, %f z\n", b.getSpeedX(), b.getSpeedY(), b.getSpeedZ());
                 upReleased = false;
             }
         } else {

@@ -17,6 +17,7 @@ public abstract class World extends Group {
     private AnimationTimer actTimer;
     private double currentTime;
     private double oldTime;
+    private boolean mouseClicked;
 
     public World() {
         actors = new HashMap<>();
@@ -127,6 +128,14 @@ public abstract class World extends Group {
 
     public void setKeyUp(KeyCode c) {
         keyCodes.remove(c);
+    }
+
+    public void setMouseClicked(boolean clicked){
+        mouseClicked = clicked;
+    }
+
+    public boolean isMouseClicked(){
+        return mouseClicked;
     }
 
 

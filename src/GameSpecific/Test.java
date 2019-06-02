@@ -1,15 +1,22 @@
 package GameSpecific;
 
+import Structure.ActorAgent;
 import Structure.ActorBox;
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.MeshView;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class Test extends Application {
 
@@ -50,22 +57,38 @@ public class Test extends Application {
         world.setCameraGroup(cameraGroup);
         world.addCameraGroupToWorld();
 
+        addCrosshairs(group);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+    private void addCrosshairs(Group g){
+        Image crossImg = new Image(getClass().getResourceAsStream("../crosshairs.png"));
+        ImageView cross = new ImageView(crossImg);
+        cross.setPreserveRatio(true);
+        cross.setFitWidth(50);
+        cross.setFitHeight(50);
+
+        g.getChildren().add(cross);
+        cross.setTranslateX(1920/2 - (cross.getBoundsInParent().getWidth()/2));
+        cross.setTranslateY(1080/2 - (cross.getBoundsInParent().getHeight()/2));
+    }
+
     private Scene setupScene(Group group, Player world) {
-        Scene scene = new Scene(group, 800, 600, true);
+        Scene scene = new Scene(group, 1920, 1080, true);
         scene.setFill(Color.SKYBLUE);
         scene.setOnKeyPressed(event -> world.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> world.setKeyUp(event.getCode()));
+        scene.setOnMousePressed(event -> world.setMouseClicked(true));
+        scene.setOnMouseReleased(event -> world.setMouseClicked(false));
         scene.setCursor(Cursor.NONE);
 
         return scene;
     }
 
     private Group setupSubscene(Player p) {
-        SubScene subScene = new SubScene(p, 800, 600, true, SceneAntialiasing.BALANCED);
+        SubScene subScene = new SubScene(p, 1920, 1080, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
         subScene.setCamera(p.getCamera());
         Group group = new Group();
@@ -94,7 +117,7 @@ public class Test extends Application {
     }
 
     private ActorBox buildFloor() {
-        ActorBox floor = new Floor(100, 1, 100) {
+        ActorBox floor = new Floor(500, 1, 500) {
             @Override
             public void act() {
 
@@ -149,26 +172,6 @@ public class Test extends Application {
         return house;
     }
 
-    public ActorBox buildExtraEpic() {
-        ActorBox box = new ActorBox(5, 5, 5) {
-            private int rotate = 0;
-
-            @Override
-            public void act() {
-                setRotate(rotate + 1);
-                rotate++;
-            }
-        };
-
-        PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(new Image(getClass().getResourceAsStream("../extraEpic.jpg")));
-        box.setMaterial(material);
-        box.setTranslateX(10);
-        box.setTranslateY(-10);
-
-        return box;
-    }
-
     private Group buildGun() {
         ObjModelImporter objImporter = new ObjModelImporter();
 
@@ -203,6 +206,8 @@ public class Test extends Application {
         gun.setRotationAxis(Rotate.Y_AXIS);
         gun.setRotate(-95);
 
+        gun.getTransforms().add(new Rotate(-2, Rotate.Z_AXIS));
+
         return gun;
     }
 
@@ -210,11 +215,6 @@ public class Test extends Application {
         PerspectiveCamera worldCamera = p.getCamera();
         worldCamera.setFarClip(5000.0);
         worldCamera.setNearClip(0.01);
-
-//        PointLight pLight = new PointLight();
-//        pLight.translateXProperty().bind(worldCamera.translateXProperty());
-//        pLight.translateYProperty().bind(worldCamera.translateYProperty());
-//        pLight.translateZProperty().bind(worldCamera.translateZProperty());
 
         Group cameraGroup = new Group(buildGun(), worldCamera);
         cameraGroup.setRotationAxis(Rotate.Y_AXIS);
