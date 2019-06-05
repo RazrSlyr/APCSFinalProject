@@ -16,6 +16,7 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class PlayerWL extends Group implements Actor {
 
@@ -48,6 +49,16 @@ public class PlayerWL extends Group implements Actor {
     private double newMouseX;
     private double newMouseY;
 
+    private final int LEFT = 0;
+    private final int RIGHT = 1;
+    private final int FORWARD = 2;
+    private final int BACK = 3;
+    private final int NONE = 4;
+
+    private Box playerBox;
+
+    private int direction;
+
 
     //variable that keeps track of if you're grounded (boolean)
     //model gravity equation with acceleration(final) and velocityY
@@ -73,18 +84,29 @@ public class PlayerWL extends Group implements Actor {
                 new Translate(0, 0, 0));
         cameraGroup = new Group(camera);
         camera.setRotationAxis(new Point3D(0, 1, 0));
+        direction = NONE;
     }
 
     public void setCameraGroup(Group group) {
         cameraGroup = group;
-        if(!cameraGroup.getChildren().contains(groundCheck)) {
+        if (!cameraGroup.getChildren().contains(groundCheck)) {
             cameraGroup.getChildren().add(groundCheck);
         }
+
+        if(!cameraGroup.getChildren().contains(playerBox)) {
+            cameraGroup.getChildren().add(playerBox);
+        }
+
+        cameraGroup.setTranslateX(positionX);
+        cameraGroup.setTranslateY(positionY);
+        cameraGroup.setTranslateZ(positionZ);
+
     }
 
     public PlayerWL(double x, double z, double width, double height, LevelWL level) {
 //        super(width, height);
         //light = new AmbientLight(Color.LIGHTGOLDENRODYELLOW);
+        playerBox = new Box(1, 1, 1);
         currLevel = level;
         bounds = getBounds();
         r = null;
@@ -129,7 +151,7 @@ public class PlayerWL extends Group implements Actor {
 //        gun.setMaterial(new PhongMaterial(Color.RED));
 //        gun.setRotationAxis(Rotate.Y_AXIS);
 //        gun.setRotate(-5);
-        groundCheck = new Box(1, 1, 1);
+        groundCheck = new Box(3, 3, 3);
 //
 //        cameraGroup.getChildren().add(gun);
 //        cameraGroup.getChildren().add(groundCheck);
@@ -152,6 +174,7 @@ public class PlayerWL extends Group implements Actor {
         groundCheck.setTranslateY(3);
         cameraGroup.setTranslateZ(-10);
         cameraGroup.setTranslateX(-10);
+        cameraGroup.getChildren().add(playerBox);
 
 
     }
@@ -172,7 +195,7 @@ public class PlayerWL extends Group implements Actor {
         double oldZ = positionZ;
 
 
-        if(currLevel.isKeyDown(KeyCode.SLASH)) {
+        if (currLevel.isKeyDown(KeyCode.SLASH)) {
             if (getGround() != null) {
                 BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX,
                         groundCheck.getBoundsInParent().getMinY() + positionY,
@@ -344,60 +367,94 @@ public class PlayerWL extends Group implements Actor {
 
         }
 
-        if (currLevel.isKeyDown(KeyCode.A)) {
-            positionZ += .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
-            positionX += .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
-            cameraGroup.setTranslateZ(positionZ);
-            cameraGroup.setTranslateX(positionX);
+        if (isColliding() && direction != NONE) {
 
-            if (isColliding()) {
-                positionZ -= .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
-                positionX -= .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
-                cameraGroup.setTranslateZ(positionZ);
-                cameraGroup.setTranslateX(positionX);
+            switch (direction) {
+                case LEFT:
+                    positionZ -= .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+                    positionX -= .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                    break;
+                case RIGHT:
+                    positionZ -= .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+                    positionX -= .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                    break;
+                case FORWARD:
+                    positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                    positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                    break;
+                case BACK:
+                    positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                    positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                    break;
+                default:
+                    break;
             }
 
-        }
-
-        if (currLevel.isKeyDown(KeyCode.D)) {
-            positionZ += .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
-            positionX += .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
-            cameraGroup.setTranslateZ(positionZ);
-            cameraGroup.setTranslateX(positionX);
-
-            if (isColliding()) {
-                positionZ -= .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
-                positionX -= .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+        } else {
+            direction = NONE;
+            if (currLevel.isKeyDown(KeyCode.A)) {
+                positionZ += .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+                positionX += .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
+
+                if (isColliding()) {
+                    positionZ -= .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+                    positionX -= .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                }
+
             }
-        }
 
-        if (currLevel.isKeyDown(KeyCode.W)) {
-            positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-            positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-            cameraGroup.setTranslateZ(positionZ);
-            cameraGroup.setTranslateX(positionX);
-
-            if (isColliding()) {
-                positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-                positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+            if (currLevel.isKeyDown(KeyCode.D)) {
+                positionZ += .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+                positionX += .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
+
+                if (isColliding()) {
+                    positionZ -= .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+                    positionX -= .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                }
             }
-        }
 
-        if (currLevel.isKeyDown(KeyCode.S)) {
-            positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
-            positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
-            cameraGroup.setTranslateZ(positionZ);
-            cameraGroup.setTranslateX(positionX);
-
-            if (isColliding()) {
+            if (currLevel.isKeyDown(KeyCode.W)) {
                 positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
                 positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
                 cameraGroup.setTranslateZ(positionZ);
                 cameraGroup.setTranslateX(positionX);
+
+                if (isColliding()) {
+                    positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                    positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                }
+            }
+
+            if (currLevel.isKeyDown(KeyCode.S)) {
+                positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+
+                if (isColliding()) {
+                    positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                    positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                }
             }
         }
 
@@ -413,14 +470,14 @@ public class PlayerWL extends Group implements Actor {
 
         if (currLevel.isMouseClicked()) {
             if (upReleased) {
-                Bullet b = new Bullet(new double[]{positionX + 0.6*Math.sin(rotateYAxis * Math.PI / 360),
-                        camera.getBoundsInParent().getMinY() + positionY - (cameraGroup.getBoundsInParent().getHeight()*Math.sin(rotateXAxis * Math.PI / 180)/2),
-                        positionZ + 2.6}, new double[]{rotateXAxis, rotateYAxis}, 5);
+                Bullet b = new Bullet(new double[]{positionX + 0.6 * Math.sin(rotateYAxis * Math.PI / 360),
+                        camera.getBoundsInParent().getMinY() + positionY - (cameraGroup.getBoundsInParent().getHeight() * Math.sin(rotateXAxis * Math.PI / 180) / 2),
+                        positionZ + 2.6}, new double[]{rotateXAxis, rotateYAxis}, 3, currLevel);
                 b.setMaterial(new PhongMaterial(Color.BLACK));
 
                 System.out.println(rotateXAxis);
 
-                getChildren().add(b);
+                currLevel.getChildren().add(b);
                 upReleased = false;
             }
         } else {
@@ -449,7 +506,7 @@ public class PlayerWL extends Group implements Actor {
     }
 
     public <A extends Node> A getGround() {
-        if(isGrounded()) {
+        if (isGrounded()) {
             BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX,
                     groundCheck.getBoundsInParent().getMinY() + positionY,
                     groundCheck.getBoundsInParent().getMinZ() + positionZ,
@@ -461,7 +518,7 @@ public class PlayerWL extends Group implements Actor {
                 if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
                     if (b.intersects(n.getBoundsInParent())) {
                         speedY = 0;
-                        return (A)n;
+                        return (A) n;
                     }
                 }
             }
@@ -471,11 +528,15 @@ public class PlayerWL extends Group implements Actor {
     }
 
     private boolean isColliding() {
-        for(int i = 0; i < currLevel.getChildren().size(); i++){
+
+        BoundingBox b = new BoundingBox(positionX - 0.5, positionY - 0.5, positionZ - 0.5,
+                1, 1, 1);
+
+        for (int i = 0; i < currLevel.getChildren().size(); i++) {
             Node n = currLevel.getChildren().get(i);
-            if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n)&& n != this) {
-                if (n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())) {
-                    if(!(getGround() != null && getGround().equals(n))) {
+            if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n) && n != this) {
+                if (n.getBoundsInParent().intersects(b)) {
+                    if (!(getGround() != null && getGround().equals(n))) {
                         System.out.println(i);
                         return true;
                     }

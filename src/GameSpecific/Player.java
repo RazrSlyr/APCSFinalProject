@@ -265,7 +265,7 @@ public class Player extends World {
 
         if (isMouseClicked()) {
             if (upReleased) {
-                Bullet b = new Bullet(new double[]{positionX + 0.6*Math.sin(rotateYAxis * Math.PI / 360),
+ /*               Bullet b = new Bullet(new double[]{positionX + 0.6*Math.sin(rotateYAxis * Math.PI / 360),
                         camera.getBoundsInParent().getMinY() + positionY - (cameraGroup.getBoundsInParent().getHeight()*Math.sin(rotateXAxis * Math.PI / 180)/2),
                         positionZ + 2.6}, new double[]{rotateXAxis, rotateYAxis}, 5);
                 b.setMaterial(new PhongMaterial(Color.BLACK));
@@ -273,7 +273,7 @@ public class Player extends World {
                 System.out.println(rotateXAxis);
 
                 getChildren().add(b);
-                upReleased = false;
+                upReleased = false;*/
             }
         } else {
             upReleased = true;

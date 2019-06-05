@@ -23,9 +23,11 @@ public class Bullet extends ActorSphere {
     private Color explosionEnd;
     private Color currColor;
 
+    private LevelWL currLevel;
 
-    public Bullet(double[] position, double[] angle, double speed) {
-        super(0.1);
+
+    public Bullet(double[] position, double[] angle, double speed, LevelWL l) {
+        super(0.01);
         posX = position[0];
         posY = position[1];
         posZ = position[2];
@@ -48,6 +50,7 @@ public class Bullet extends ActorSphere {
 
         setMaterial(new PhongMaterial(Color.BLACK));
 
+        currLevel = l;
     }
 
     private World getWorld() {
@@ -79,7 +82,7 @@ public class Bullet extends ActorSphere {
             w.remove(this);
         }
 
-        if (isIntersectingObjectInParent(getTopParent()) && !hit) {
+        if (isIntersectingObjectInParent(currLevel) && !hit) {
             setRadius(7);
             hit = true;
             setMaterial(new PhongMaterial(explosionStart));
@@ -129,14 +132,15 @@ public class Bullet extends ActorSphere {
 
     private boolean isIntersectingObjectInParent(Parent p) {
         for (int i = 0; i < p.getChildrenUnmodifiable().size(); i++) {
-            if (p.getChildrenUnmodifiable().get(i) instanceof Parent && !(p.getChildrenUnmodifiable().get(i) instanceof Model)) {
+            if (p.getChildrenUnmodifiable().get(i) instanceof Parent && !(p.getChildrenUnmodifiable().get(i) instanceof Model) && !(p.getChildrenUnmodifiable().get(i) instanceof PlayerWL)) {
                 if (isIntersectingObjectInParent((Parent) (p.getChildrenUnmodifiable().get(i)))) {
                     return true;
                 }
             } else {
                 if (!(p.getChildrenUnmodifiable().get(i) instanceof Bullet) &&
                         getBoundsInParent().intersects(p.getChildrenUnmodifiable().get(i).getBoundsInParent()) &&
-                        !p.getChildrenUnmodifiable().get(i).equals(this)) {
+                        !p.getChildrenUnmodifiable().get(i).equals(this) &&
+                        !(p.getChildrenUnmodifiable().get(i) instanceof PlayerWL)) {
                     return true;
                 }
             }

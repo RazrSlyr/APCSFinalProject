@@ -59,20 +59,20 @@ public class Main extends LevelWL {
 
         getChildren().add(floor);
 
-        ActorBox w1 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w1 = buildWall(0,0,0, 4, 20, 20);
         w1.setTranslateZ(-200);
         w1.setTranslateX(10);
         getChildren().add(w1);
 
 
 
-        ActorBox w2 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w2 = buildWall(0,0,0, 4, 20, 20);
         w2.setTranslateZ(-200);
         w2.setTranslateX(-10);
         getChildren().add(w2);
 
-        ActorBox w3 = buildWall(0,0,0, 1, 20, 20);
-        ActorBox w4 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w3 = buildWall(0,0,0, 4, 20, 20);
+        ActorBox w4 = buildWall(0,0,0, 4, 20, 20);
 
         w3.setRotationAxis(Rotate.Y_AXIS);
         w3.setRotate(90);
@@ -88,8 +88,8 @@ public class Main extends LevelWL {
         w4.setTranslateX(20);
         w4.setTranslateZ(-160);
 
-        ActorBox w5 = buildWall(0,0,0, 1, 20, 20);
-        ActorBox w6 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w5 = buildWall(0,0,0, 4, 20, 20);
+        ActorBox w6 = buildWall(0,0,0, 4, 20, 20);
 
         w5.setRotationAxis(Rotate.Y_AXIS);
         w5.setRotate(90);
@@ -105,7 +105,7 @@ public class Main extends LevelWL {
         w6.setTranslateX(-20);
         w6.setTranslateZ(-160);
 
-        ActorBox w7 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w7 = buildWall(0,0,0, 4, 20, 20);
         w7.setRotationAxis(Rotate.Y_AXIS);
         w7.setRotate(90);
         getChildren().add(w7);
@@ -131,12 +131,12 @@ public class Main extends LevelWL {
         w9.setTranslateX(-10);
         getChildren().add(w9);*/
 
-        ActorBox w10 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w10 = buildWall(0,0,0, 4, 20, 20);
         w10.setTranslateZ(-120);
         w10.setTranslateX(30);
         getChildren().add(w10);
 
-        ActorBox w11 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w11 = buildWall(0,0,0, 4, 20, 20);
         w11.setTranslateZ(-120);
         w11.setTranslateX(20);
         getChildren().add(w11);
@@ -149,7 +149,7 @@ public class Main extends LevelWL {
 
         add(-15, 0, -120);
 
-        ActorBox w13 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w13 = buildWall(0,0,0, 4, 20, 20);
         w13.setTranslateZ(-120);
         w13.setTranslateX(-20);
         getChildren().add(w13);
