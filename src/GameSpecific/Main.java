@@ -50,7 +50,7 @@ public class Main extends LevelWL {
     private PlayerWL p;
     private Group cameraGroup;
 
-    public Main(){
+    public Main() {
 
         ActorBox floor = buildFloor();
         getChildren().add(buildPointlight(0, -20, 0));
@@ -121,12 +121,12 @@ public class Main extends LevelWL {
         add(-10, 0, -120);
 
         add(-30, 0, -120);
-        /*ActorBox w8 = buildWall(0,0,0, 1, 20, 20);
+        /*ActorBox w8 = buildWall(0, 0, 0, 1, 20, 20);
         w8.setTranslateZ(-120);
         w8.setTranslateX(10);
         getChildren().add(w8);*/
 
-        /*ActorBox w9 = buildWall(0,0,0, 1, 20, 20);
+        /*ActorBox w9 = buildWall(0, 0, 0, 1, 20, 20);
         w9.setTranslateZ(-120);
         w9.setTranslateX(-10);
         getChildren().add(w9);*/
@@ -141,7 +141,7 @@ public class Main extends LevelWL {
         w11.setTranslateX(20);
         getChildren().add(w11);
 
-        /*ActorBox w12 = buildWall(0,0,0, 1, 20, 20);
+        /*ActorBox w12 = buildWall(0, 0, 0, 1, 20, 20);
         w12.setTranslateZ(-120);
         w12.setTranslateX(-30);
         getChildren().add(w12);*/
@@ -149,7 +149,7 @@ public class Main extends LevelWL {
 
         add(-15, 0, -120);
 
-        ActorBox w13 = buildWall(0,0,0, 4, 20, 20);
+        ActorBox w13 = buildWall(0,0,0, 1, 20, 20);
         w13.setTranslateZ(-120);
         w13.setTranslateX(-20);
         getChildren().add(w13);
@@ -302,23 +302,13 @@ public class Main extends LevelWL {
 
     }
 
-    public void setPlayer(PlayerWL p) {
-        this.p = p;
-        getChildren().add(p);
-    }
-
     public PlayerWL getPlayer() {
         return p;
     }
 
-
-    public void setCameraGroup(Group g) {
-        cameraGroup = g;
-        cameraGroup.getTransforms().addAll(
-                new Rotate(0, Rotate.X_AXIS));
-
-        cameraGroup.setTranslateZ(-10);
-        cameraGroup.setTranslateX(-10);
+    public void setPlayer(PlayerWL p) {
+        this.p = p;
+        getChildren().add(p);
     }
 
     public void addCameraGroupToWorld() {
@@ -327,6 +317,15 @@ public class Main extends LevelWL {
 
     public Group getCameraGroup() {
         return cameraGroup;
+    }
+
+    public void setCameraGroup(Group g) {
+        cameraGroup = g;
+        cameraGroup.getTransforms().addAll(
+                new Rotate(0, Rotate.X_AXIS));
+
+        cameraGroup.setTranslateZ(-10);
+        cameraGroup.setTranslateX(-10);
     }
 
 
