@@ -77,6 +77,9 @@ public class PlayerWL extends Group implements Actor {
 
     public void setCameraGroup(Group group) {
         cameraGroup = group;
+        if(!cameraGroup.getChildren().contains(groundCheck)) {
+            cameraGroup.getChildren().add(groundCheck);
+        }
     }
 
     public PlayerWL(double x, double z, double width, double height, LevelWL level) {
@@ -106,32 +109,32 @@ public class PlayerWL extends Group implements Actor {
                 new Rotate(0, Rotate.Y_AXIS),
                 new Rotate(0, Rotate.X_AXIS),
                 new Translate(0, -2, 0));
-        cameraGroup = new Group(camera);
-        cameraGroup.getTransforms().addAll(
-                new Rotate(0, Rotate.X_AXIS)
-        );
+//        cameraGroup = new Group(camera);
+//        cameraGroup.getTransforms().addAll(
+//                new Rotate(0, Rotate.X_AXIS)
+//        );
         camera.setRotationAxis(new Point3D(0, 1, 0));
         //getChildren().add(light);
 
-        ActorBox gun = new ActorBox(0.5, 0.5, 5) {
-            @Override
-            public void act() {
-
-            }
-        };
-
-        gun.setTranslateY(-2);
-        gun.setTranslateX(0.5);
-        gun.setTranslateZ(6);
-        gun.setMaterial(new PhongMaterial(Color.RED));
-        gun.setRotationAxis(Rotate.Y_AXIS);
-        gun.setRotate(-5);
+//        ActorBox gun = new ActorBox(0.5, 0.5, 5) {
+//            @Override
+//            public void act() {
+//
+//            }
+//        };
+//
+//        gun.setTranslateY(-2);
+//        gun.setTranslateX(0.5);
+//        gun.setTranslateZ(6);
+//        gun.setMaterial(new PhongMaterial(Color.RED));
+//        gun.setRotationAxis(Rotate.Y_AXIS);
+//        gun.setRotate(-5);
         groundCheck = new Box(1, 1, 1);
-
-        cameraGroup.getChildren().add(gun);
-        cameraGroup.getChildren().add(groundCheck);
-        cameraGroup.setTranslateZ(-10);
-        cameraGroup.setTranslateX(-10);
+//
+//        cameraGroup.getChildren().add(gun);
+//        cameraGroup.getChildren().add(groundCheck);
+//        cameraGroup.setTranslateZ(-10);
+//        cameraGroup.setTranslateX(-10);
         positionZ = -10;
         positionX = -10;
         groundCheck.setMaterial(new PhongMaterial(Color.WHITE));
@@ -169,6 +172,19 @@ public class PlayerWL extends Group implements Actor {
         double oldZ = positionZ;
 
 
+        if(currLevel.isKeyDown(KeyCode.SLASH)) {
+            if (getGround() != null) {
+                BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX,
+                        groundCheck.getBoundsInParent().getMinY() + positionY,
+                        groundCheck.getBoundsInParent().getMinZ() + positionZ,
+                        groundCheck.getWidth(),
+                        groundCheck.getHeight(),
+                        groundCheck.getDepth());
+                System.out.println("GroundCheck Bounding Box: " + b);
+                System.out.println("Ground Bounding Box: " + getGround().getBoundsInParent());
+            }
+        }
+
         // System.out.println(speedX);
 
         //boolean inAir = isKeyDown(KeyCode.SPACE);
@@ -178,10 +194,116 @@ public class PlayerWL extends Group implements Actor {
             if (speedY > 0) {
                 speedY = 0;
             } else if (currLevel.isKeyDown(KeyCode.SPACE)) {
+                System.out.println("epic");
                 speedY = -25;
+                System.out.println(speedY);
             }
 
+/*            if (wasInAir) {
+                if (originalY > positionY) {
+                    positionY += 0.75;
+                    cameraGroup.setTranslateY(positionY);
+                    //     System.out.println("Position Y aFTer jump = " + positionY);
+                    //wasInAir = true;
+                    counter++;
+                } else {
+                    wasInAir = false;
+                    counter = 0;
+                }
+            }*/
+/*            if (isKeyDown(KeyCode.A)) {
+                positionZ += .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+                positionX += .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+
+                if (isColliding()) {
+                    positionZ -= .5 * Math.cos((rotateYAxis - 90) / 180 * Math.PI);
+                    positionX -= .5 * Math.sin((rotateYAxis - 90) / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                }
+
+            }
+
+            if (isKeyDown(KeyCode.D)) {
+                positionZ += .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+                positionX += .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+
+                if (isColliding()) {
+                    positionZ -= .5 * Math.cos((rotateYAxis + 90) / 180 * Math.PI);
+                    positionX -= .5 * Math.sin((rotateYAxis + 90) / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                }
+            }
+
+            if (isKeyDown(KeyCode.W)) {
+                positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+
+                if (isColliding()) {
+                    positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                    positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                }
+            }
+
+            if (isKeyDown(KeyCode.S)) {
+                positionZ -= .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                positionX -= .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                cameraGroup.setTranslateZ(positionZ);
+                cameraGroup.setTranslateX(positionX);
+
+                if (isColliding()) {
+                    positionZ += .5 * Math.cos(rotateYAxis / 180 * Math.PI);
+                    positionX += .5 * Math.sin(rotateYAxis / 180 * Math.PI);
+                    cameraGroup.setTranslateZ(positionZ);
+                    cameraGroup.setTranslateX(positionX);
+                }
+            }
+
+            speedX = (positionX - oldX) / deltaTime();
+            speedZ = (positionZ - oldZ) / deltaTime();*/
+
         } else {
+            //in air, can't move keys, but can look
+
+            /*double currentY = positionY;
+
+            if (firstTime) {
+                firstTime = false;
+
+                originalY = positionY;
+            }
+
+
+            positionY -= 5;
+
+            positionX += speedX;
+            positionZ += speedZ;
+
+            // System.out.println("Position Y in Jump = " + positionY);
+
+            cameraGroup.setTranslateY(positionY);
+            cameraGroup.setTranslateX(positionX);
+            cameraGroup.setTranslateZ(positionZ);
+            wasInAir = true;
+//            inAir = false;*/
+/*
+            positionX += speedX * deltaTime();
+            positionZ += speedZ * deltaTime();
+
+
+
+            cameraGroup.setTranslateX(positionX);
+            cameraGroup.setTranslateZ(positionZ);*/
+
             speedY += GRAVITY * currLevel.deltaTime() / 1000;
 
         }
@@ -206,6 +328,20 @@ public class PlayerWL extends Group implements Actor {
 
             cameraGroup.getTransforms().set(0, new Rotate(rotateXAxis, Rotate.X_AXIS));
             mouseY = newMouseY;
+        }
+
+        positionY += speedY * currLevel.deltaTime() / 1000;
+        cameraGroup.setTranslateY(positionY);
+
+
+        if (positionY > 10) {
+            positionY = -5;
+            positionX = -5;
+            positionZ = -5;
+            cameraGroup.setTranslateX(positionX);
+            cameraGroup.setTranslateY(positionY);
+            cameraGroup.setTranslateZ(positionZ);
+
         }
 
         if (currLevel.isKeyDown(KeyCode.A)) {
@@ -290,20 +426,6 @@ public class PlayerWL extends Group implements Actor {
         } else {
             upReleased = true;
         }
-
-        positionY += speedY * currLevel.deltaTime() / 1000;
-        cameraGroup.setTranslateY(positionY);
-
-
-        if (positionY > 10) {
-            positionY = -5;
-            positionX = -5;
-            positionZ = -5;
-            cameraGroup.setTranslateX(positionX);
-            cameraGroup.setTranslateY(positionY);
-            cameraGroup.setTranslateZ(positionZ);
-
-        }
     }
 
     public boolean isGrounded() {
@@ -315,7 +437,7 @@ public class PlayerWL extends Group implements Actor {
                 groundCheck.getDepth());
 
         for (Node n : currLevel.getChildren()) {
-            if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
+            if (n != groundCheck && n != this && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
                 if (b.intersects(n.getBoundsInParent())) {
                     speedY = 0;
                     return true;
@@ -326,13 +448,35 @@ public class PlayerWL extends Group implements Actor {
         return false;
     }
 
+    public <A extends Node> A getGround() {
+        if(isGrounded()) {
+            BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX,
+                    groundCheck.getBoundsInParent().getMinY() + positionY,
+                    groundCheck.getBoundsInParent().getMinZ() + positionZ,
+                    groundCheck.getWidth(),
+                    groundCheck.getHeight(),
+                    groundCheck.getDepth());
+
+            for (Node n : currLevel.getChildren()) {
+                if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
+                    if (b.intersects(n.getBoundsInParent())) {
+                        speedY = 0;
+                        return (A)n;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
     private boolean isColliding() {
-        for(int i = 0; i < currLevel.getChildren().size(); i++){
-            Node n = currLevel.getChildren().get(i);
-            if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n) && !(n instanceof PlayerWL)) {
-                if (n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent()) && !(n instanceof Floor)) {
-                    System.out.println(i);
-                    return true;
+        for (Node n : currLevel.getChildren()) {
+            if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
+                if (n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())) {
+                    if(!(getGround() != null && getGround().equals(n))) {
+                        return true;
+                    }
                 }
             }
         }

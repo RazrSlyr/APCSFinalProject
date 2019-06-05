@@ -69,9 +69,22 @@ Bumbling Bingus
 * Changed jumping to be based on gravity and velocity
 * Added ground checker to allow for landing on things that aren't platforms
 
+Bumbling Bingus and TigerStar
+* Collaborated on combining on what already existed with TigerStar's
+Level class. Not super successful, as collision is off, bullets don't spawn right
+(even worse than before), and (insert crab emoji) gun is gone. As
+the level architecture is crucial to this game, we will work on fixing this
+ASAP.
+
 ## 6/2/19
 
 Jean-Luc Picard
 * Changed shooting to use the mouse
 * Improved shooting spawn point
 * Experimented with adding new entities like enemies
+
+Bumbling Bingus
+* Fixed the issues with level implementation. Turns out it wasn't working
+since we never called level.addCameraGroupToWorld(). This really was a 
+b r u h  moment. It works now.aaaaaaa
+* Made mouse stay in frame. This is necessary for shooting with mouse.
