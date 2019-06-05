@@ -28,50 +28,34 @@ public class TestWL extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setResizable(false);
 
-        ActorBox floor = buildFloor();
-
         Group cameraGroup = new Group();
 
-        LevelWL testLevel = new LevelWL();
+        LevelWL testLevel = new Main();
         testLevel.setCameraGroup(cameraGroup);
-
-        PlayerWL player = new PlayerWL(1337, 1337, testLevel); // replace this with a level object, and have the player be a group that implements actor
-
+        PlayerWL player = new PlayerWL(0, -230, 1337, 1337, testLevel);
         testLevel.setPlayer(player);
 
         cameraGroup = buildCameraGroup(player);
+        cameraGroup.setTranslateZ(250);
         testLevel.setCameraGroup(cameraGroup);
         player.setCameraGroup(cameraGroup);
         testLevel.addCameraGroupToWorld();
-
-        testLevel.getChildren().add(buildPointlight(0, -20, 0));
-
-        testLevel.getChildren().add(buildAmbientLight());
-        Model tree = buildTree();
-        tree.setTranslateX(5);
-        testLevel.getChildren().add(tree);
-
-        Model lightHouse = buildHouse();
-        lightHouse.setTranslateX(-20);
-        testLevel.getChildren().add(lightHouse);
-        System.out.println(lightHouse.getBoundsInParent());
-
-        testLevel.getChildren().add(floor);
 
         Group group = setupSubscene(testLevel);
         Scene scene = setupScene(group, testLevel);
 
         addCrosshairs(group);
 
-
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        System.out.println(testLevel.getChildren().size());
 
         testLevel.start();
     }
 
     private Scene setupScene(Group group, LevelWL l) {
-        Scene scene = new Scene(group, 800, 600, true);
+        Scene scene = new Scene(group, 1900, 1080, true);
         scene.setFill(Color.SKYBLUE);
         scene.setOnKeyPressed(event -> l.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> l.setKeyUp(event.getCode()));
@@ -85,7 +69,7 @@ public class TestWL extends Application {
     }
 
     private Group setupSubscene(LevelWL l) {
-        SubScene subScene = new SubScene(l, 800, 600, true, SceneAntialiasing.BALANCED);
+        SubScene subScene = new SubScene(l, 1920, 1080, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
         subScene.setCamera(l.getPlayer().getCamera());
         Group group = new Group();
@@ -93,80 +77,6 @@ public class TestWL extends Application {
         l.start();
 
         return group;
-    }
-
-    private AmbientLight buildAmbientLight() {
-        AmbientLight a = new AmbientLight();
-        a.setColor(Color.LIGHTGOLDENRODYELLOW);
-
-        return a;
-    }
-
-    private PointLight buildPointlight(int translateX, int translateY, int translateZ) {
-        PointLight p = new PointLight();
-        p.setColor(Color.LIGHTGOLDENRODYELLOW);
-
-        p.setTranslateX(translateX);
-        p.setTranslateY(translateY);
-        p.setTranslateZ(translateZ);
-
-        return p;
-    }
-
-    private ActorBox buildFloor() {
-        ActorBox floor = new Floor(100, 1, 100) {
-            @Override
-            public void act() {
-
-            }
-        };
-
-        floor.setMaterial(new PhongMaterial(Color.SANDYBROWN));
-        floor.setTranslateY(3);
-
-        System.out.println(floor.getBoundsInParent());
-
-        return floor;
-    }
-
-    private Model buildTree() {
-        ObjModelImporter objImporter = new ObjModelImporter();
-
-        Model tree = new Model();
-        try {
-            objImporter.read(getClass().getResource("../tree.obj"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        MeshView[] treeMeshViews = objImporter.getImport();
-        for (MeshView treePart : treeMeshViews) {
-            treePart.setScaleX(3);
-            treePart.setScaleY(3);
-            treePart.setScaleZ(3);
-        }
-        treeMeshViews[0].setTranslateY(2);
-
-        System.out.println(treeMeshViews.length);
-        tree.getChildren().addAll(treeMeshViews);
-        tree.setTranslateX(0);
-
-        return tree;
-    }
-
-    private Model buildHouse() {
-        ObjModelImporter objImporter = new ObjModelImporter();
-
-        Model house = new Model();
-        try {
-            objImporter.read(getClass().getResource("../house.obj"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        MeshView[] houseMeshViews = objImporter.getImport();
-        house.getChildren().addAll(houseMeshViews);
-        house.setTranslateY(3);
-
-        return house;
     }
 
     public ActorBox buildExtraEpic() {
@@ -226,18 +136,26 @@ public class TestWL extends Application {
         return gun;
     }
 
+    private PointLight buildPointlight(double translateX, double translateY, double translateZ) {
+        PointLight p = new PointLight();
+        p.setColor(Color.LIGHTGOLDENRODYELLOW);
+
+        p.setTranslateX(translateX);
+        p.setTranslateY(translateY);
+        p.setTranslateZ(translateZ);
+
+        return p;
+    }
+
     private Group buildCameraGroup(PlayerWL p) {
         PerspectiveCamera worldCamera = p.getCamera();
         worldCamera.setFarClip(5000.0);
         worldCamera.setNearClip(0.01);
 
-//        PointLight pLight = new PointLight();
-//        pLight.translateXProperty().bind(worldCamera.translateXProperty());
-//        pLight.translateYProperty().bind(worldCamera.translateYProperty());
-//        pLight.translateZProperty().bind(worldCamera.translateZProperty());
-
         worldCamera.setRotationAxis(new Point3D(0, 1, 0));
         Group cameraGroup = new Group(buildGun(), worldCamera);
+        cameraGroup.getChildren().add(buildPointlight(worldCamera.getTranslateX(), worldCamera.getTranslateY(), worldCamera.getTranslateY()));
+
         cameraGroup.setRotationAxis(Rotate.Y_AXIS);
 
         return cameraGroup;
@@ -251,8 +169,8 @@ public class TestWL extends Application {
         cross.setFitHeight(50);
 
         g.getChildren().add(cross);
-        cross.setTranslateX(800 / 2 - (cross.getBoundsInParent().getWidth() / 2));
-        cross.setTranslateY(600 / 2 - (cross.getBoundsInParent().getHeight() / 2));
+        cross.setTranslateX(1920 / 2 - (cross.getBoundsInParent().getWidth() / 2));
+        cross.setTranslateY(1080 / 2 - (cross.getBoundsInParent().getHeight() / 2));
     }
 
 }
