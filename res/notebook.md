@@ -3,7 +3,7 @@
 ## Preface
 
 Group includes Rohan Venkatapuram (Bumbing Bingus), Ashish Rao (Jean-Luc Picard), Amartya Bhattacharya (TigerStar), and 
-Siddarth Vishwanathan (Shadowclaw Epic Styl). 
+Siddarth Viswanathan (Shadowclaw Epic Styl). 
 Game being built is a 3D first-person shooter game which allows for players to use traditional weaponry 
 and also a portal gun similar to the popular game 'Portal' to take out targets.
 
@@ -88,3 +88,10 @@ Bumbling Bingus
 since we never called level.addCameraGroupToWorld(). This really was a 
 b r u h  moment. It works now.aaaaaaa
 * Made mouse stay in frame. This is necessary for shooting with mouse.
+
+## 6/5/19
+
+Shadowclaw Epic Styl
+* Added targets to the world, got rid of the walls
+
+
