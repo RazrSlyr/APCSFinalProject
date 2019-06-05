@@ -1,12 +1,10 @@
 package GameSpecific;
 
-import Structure.Actor;
 import Structure.ActorBox;
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.PointLight;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -50,7 +48,7 @@ public class Main extends LevelWL {
     private PlayerWL p;
     private Group cameraGroup;
 
-    public Main(){
+    public Main() {
 
         ActorBox floor = buildFloor();
         getChildren().add(buildPointlight(0, -20, 0));
@@ -59,20 +57,20 @@ public class Main extends LevelWL {
 
         getChildren().add(floor);
 
-        ActorBox w1 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w1 = buildWall(0, 0, 0, 1, 20, 20);
         w1.setTranslateZ(-200);
         w1.setTranslateX(10);
         getChildren().add(w1);
 
 
 
-        ActorBox w2 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w2 = buildWall(0, 0, 0, 1, 20, 20);
         w2.setTranslateZ(-200);
         w2.setTranslateX(-10);
         getChildren().add(w2);
 
-        ActorBox w3 = buildWall(0,0,0, 1, 20, 20);
-        ActorBox w4 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w3 = buildWall(0, 0, 0, 1, 20, 20);
+        ActorBox w4 = buildWall(0, 0, 0, 1, 20, 20);
 
         w3.setRotationAxis(Rotate.Y_AXIS);
         w3.setRotate(90);
@@ -88,8 +86,8 @@ public class Main extends LevelWL {
         w4.setTranslateX(20);
         w4.setTranslateZ(-160);
 
-        ActorBox w5 = buildWall(0,0,0, 1, 20, 20);
-        ActorBox w6 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w5 = buildWall(0, 0, 0, 1, 20, 20);
+        ActorBox w6 = buildWall(0, 0, 0, 1, 20, 20);
 
         w5.setRotationAxis(Rotate.Y_AXIS);
         w5.setRotate(90);
@@ -105,7 +103,7 @@ public class Main extends LevelWL {
         w6.setTranslateX(-20);
         w6.setTranslateZ(-160);
 
-        ActorBox w7 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w7 = buildWall(0, 0, 0, 1, 20, 20);
         w7.setRotationAxis(Rotate.Y_AXIS);
         w7.setRotate(90);
         getChildren().add(w7);
@@ -121,27 +119,27 @@ public class Main extends LevelWL {
         add(-10, 0, -120);
 
         add(-30, 0, -120);
-        /*ActorBox w8 = buildWall(0,0,0, 1, 20, 20);
+        /*ActorBox w8 = buildWall(0, 0, 0, 1, 20, 20);
         w8.setTranslateZ(-120);
         w8.setTranslateX(10);
         getChildren().add(w8);*/
 
-        /*ActorBox w9 = buildWall(0,0,0, 1, 20, 20);
+        /*ActorBox w9 = buildWall(0, 0, 0, 1, 20, 20);
         w9.setTranslateZ(-120);
         w9.setTranslateX(-10);
         getChildren().add(w9);*/
 
-        ActorBox w10 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w10 = buildWall(0, 0, 0, 1, 20, 20);
         w10.setTranslateZ(-120);
         w10.setTranslateX(30);
         getChildren().add(w10);
 
-        ActorBox w11 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w11 = buildWall(0, 0, 0, 1, 20, 20);
         w11.setTranslateZ(-120);
         w11.setTranslateX(20);
         getChildren().add(w11);
 
-        /*ActorBox w12 = buildWall(0,0,0, 1, 20, 20);
+        /*ActorBox w12 = buildWall(0, 0, 0, 1, 20, 20);
         w12.setTranslateZ(-120);
         w12.setTranslateX(-30);
         getChildren().add(w12);*/
@@ -149,7 +147,7 @@ public class Main extends LevelWL {
 
         add(-15, 0, -120);
 
-        ActorBox w13 = buildWall(0,0,0, 1, 20, 20);
+        ActorBox w13 = buildWall(0, 0, 0, 1, 20, 20);
         w13.setTranslateZ(-120);
         w13.setTranslateX(-20);
         getChildren().add(w13);
@@ -302,23 +300,13 @@ public class Main extends LevelWL {
 
     }
 
-    public void setPlayer(PlayerWL p) {
-        this.p = p;
-        getChildren().add(p);
-    }
-
     public PlayerWL getPlayer() {
         return p;
     }
 
-
-    public void setCameraGroup(Group g) {
-        cameraGroup = g;
-        cameraGroup.getTransforms().addAll(
-                new Rotate(0, Rotate.X_AXIS));
-
-        cameraGroup.setTranslateZ(-10);
-        cameraGroup.setTranslateX(-10);
+    public void setPlayer(PlayerWL p) {
+        this.p = p;
+        getChildren().add(p);
     }
 
     public void addCameraGroupToWorld() {
@@ -327,6 +315,15 @@ public class Main extends LevelWL {
 
     public Group getCameraGroup() {
         return cameraGroup;
+    }
+
+    public void setCameraGroup(Group g) {
+        cameraGroup = g;
+        cameraGroup.getTransforms().addAll(
+                new Rotate(0, Rotate.X_AXIS));
+
+        cameraGroup.setTranslateZ(-10);
+        cameraGroup.setTranslateX(-10);
     }
 
 

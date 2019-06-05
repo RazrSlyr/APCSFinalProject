@@ -1,16 +1,12 @@
 package GameSpecific;
 
-import Structure.ActorBox;
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.MeshView;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -52,6 +48,20 @@ public class TestWL extends Application {
         System.out.println(testLevel.getChildren().size());
 
         testLevel.start();
+
+//        final Task task = new Task() {
+//
+//            @Override
+//            protected Object call() throws Exception {
+//                AudioClip audio = new AudioClip(getClass().getResource("aquarium.mp3").toExternalForm());
+//                audio.setVolume(0.5f);
+//                audio.setCycleCount(INDEFINITE);
+//                audio.play();
+//                return null;
+//            }
+//        };
+//        Thread thread = new Thread(task);
+//        thread.start();
     }
 
     private Scene setupScene(Group group, LevelWL l) {
@@ -77,26 +87,6 @@ public class TestWL extends Application {
         l.start();
 
         return group;
-    }
-
-    public ActorBox buildExtraEpic() {
-        ActorBox box = new ActorBox(5, 5, 5) {
-            private int rotate = 0;
-
-            @Override
-            public void act() {
-                setRotate(rotate + 1);
-                rotate++;
-            }
-        };
-
-        PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(new Image(getClass().getResourceAsStream("../extraEpic.jpg")));
-        box.setMaterial(material);
-        box.setTranslateX(10);
-        box.setTranslateY(-10);
-
-        return box;
     }
 
     private Group buildGun() {
@@ -169,8 +159,8 @@ public class TestWL extends Application {
         cross.setFitHeight(50);
 
         g.getChildren().add(cross);
-        cross.setTranslateX(1920 / 2 - (cross.getBoundsInParent().getWidth() / 2));
-        cross.setTranslateY(1080 / 2 - (cross.getBoundsInParent().getHeight() / 2));
+        cross.setTranslateX(960 - (cross.getBoundsInParent().getWidth() / 2));
+        cross.setTranslateY(540 - (cross.getBoundsInParent().getHeight() / 2));
     }
 
 }
