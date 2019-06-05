@@ -88,6 +88,7 @@ Bumbling Bingus
 since we never called level.addCameraGroupToWorld(). It works now.
 * Made mouse stay in frame. This is necessary for shooting with mouse.
 
+
 ## 6/5/19
 TigerStar
 * Designed the level, along with Shadowclaw Epic Style
