@@ -112,13 +112,15 @@ public class Main extends LevelWL {
         w7.setTranslateX(0);
         w7.setTranslateZ(-140);
 
-        add(5, -10, 0);
+        add(5, -5, 0);
 
         add(10, 0, -120);
 
         add(-30, 0, -5 );
 
         add(-10, 0, -120);
+
+        add(-30, 0, -120);
         /*ActorBox w8 = buildWall(0,0,0, 1, 20, 20);
         w8.setTranslateZ(-120);
         w8.setTranslateX(10);
@@ -139,10 +141,13 @@ public class Main extends LevelWL {
         w11.setTranslateX(20);
         getChildren().add(w11);
 
-        ActorBox w12 = buildWall(0,0,0, 1, 20, 20);
+        /*ActorBox w12 = buildWall(0,0,0, 1, 20, 20);
         w12.setTranslateZ(-120);
         w12.setTranslateX(-30);
-        getChildren().add(w12);
+        getChildren().add(w12);*/
+
+
+        add(-15, 0, -120);
 
         ActorBox w13 = buildWall(0,0,0, 1, 20, 20);
         w13.setTranslateZ(-120);
@@ -270,7 +275,7 @@ public class Main extends LevelWL {
     }
 
     public void add(double x, double y, double z) {
-        Target target = new Target(5, 5, 1);
+        Target target = new Target(5, 5, 5);
 
         System.out.println("im in");
         target.setTranslateX(x);
