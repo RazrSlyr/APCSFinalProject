@@ -53,9 +53,6 @@ public class Main extends LevelWL {
     public Main(){
 
         ActorBox floor = buildFloor();
-
-        Group cameraGroup = new Group();
-        setCameraGroup(cameraGroup);
         getChildren().add(buildPointlight(0, -20, 0));
 
         getChildren().add(buildAmbientLight());

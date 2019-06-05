@@ -471,14 +471,17 @@ public class PlayerWL extends Group implements Actor {
     }
 
     private boolean isColliding() {
-        for (Node n : currLevel.getChildren()) {
-            if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n)) {
+        for(int i = 0; i < currLevel.getChildren().size(); i++){
+            Node n = currLevel.getChildren().get(i);
+            if (n != groundCheck && !(n == cameraGroup) && !cameraGroup.getChildren().contains(n)&& n != this) {
                 if (n.getBoundsInParent().intersects(cameraGroup.getBoundsInParent())) {
                     if(!(getGround() != null && getGround().equals(n))) {
+                        System.out.println(i);
                         return true;
                     }
                 }
             }
+
         }
 
         return false;
