@@ -64,6 +64,8 @@ public class Main extends LevelWL {
         w1.setTranslateX(10);
         getChildren().add(w1);
 
+
+
         ActorBox w2 = buildWall(0,0,0, 1, 20, 20);
         w2.setTranslateZ(-200);
         w2.setTranslateX(-10);
@@ -110,15 +112,22 @@ public class Main extends LevelWL {
         w7.setTranslateX(0);
         w7.setTranslateZ(-140);
 
-        ActorBox w8 = buildWall(0,0,0, 1, 20, 20);
+        add(5, -10, 0);
+
+        add(10, 0, -120);
+
+        add(-30, 0, -5 );
+
+        add(-10, 0, -120);
+        /*ActorBox w8 = buildWall(0,0,0, 1, 20, 20);
         w8.setTranslateZ(-120);
         w8.setTranslateX(10);
-        getChildren().add(w8);
+        getChildren().add(w8);*/
 
-        ActorBox w9 = buildWall(0,0,0, 1, 20, 20);
+        /*ActorBox w9 = buildWall(0,0,0, 1, 20, 20);
         w9.setTranslateZ(-120);
         w9.setTranslateX(-10);
-        getChildren().add(w9);
+        getChildren().add(w9);*/
 
         ActorBox w10 = buildWall(0,0,0, 1, 20, 20);
         w10.setTranslateZ(-120);
@@ -149,7 +158,7 @@ public class Main extends LevelWL {
         };
 
         PhongMaterial material = new PhongMaterial(Color.RED);
-        material.setDiffuseMap(new Image(getClass().getResourceAsStream("..\\extraEpic.jpg")));
+        material.setDiffuseMap(new Image(getClass().getResourceAsStream("../extraEpic.jpg")));
         box.setMaterial(material);
         box.setTranslateX(x);
         box.setTranslateX(y);
@@ -259,6 +268,18 @@ public class Main extends LevelWL {
         super.add(target);
         targets.add(target);
     }
+
+    public void add(double x, double y, double z) {
+        Target target = new Target(5, 5, 1);
+
+        System.out.println("im in");
+        target.setTranslateX(x);
+        target.setTranslateY(y);
+        target.setTranslateZ(z);
+        add(target);
+
+    }
+
 
     public void addAll(Target... target) {
         super.addAll(target);
