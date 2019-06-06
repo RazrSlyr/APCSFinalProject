@@ -90,10 +90,9 @@ since we never called level.addCameraGroupToWorld(). It works now.
 
 
 ## 6/5/19
-TigerStar
-* Designed the level, along with Shadowclaw Epic Style
-
 Shadowclaw Epic Style
 * Added targets to the world
 
-
+TigerStar
+* Designed the level, adding and positioning walls
+* More work on the level and targets
