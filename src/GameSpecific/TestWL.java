@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 
 public class TestWL extends Application {
 
+    private final int width = 1920;
+    private final int height = 1080;
+
     /**
      * Java main for when running without JavaFX launcher
      */
@@ -48,24 +51,10 @@ public class TestWL extends Application {
         System.out.println(testLevel.getChildren().size());
 
         testLevel.start();
-
-//        final Task task = new Task() {
-//
-//            @Override
-//            protected Object call() throws Exception {
-//                AudioClip audio = new AudioClip(getClass().getResource("aquarium.mp3").toExternalForm());
-//                audio.setVolume(0.5f);
-//                audio.setCycleCount(INDEFINITE);
-//                audio.play();
-//                return null;
-//            }
-//        };
-//        Thread thread = new Thread(task);
-//        thread.start();
     }
 
     private Scene setupScene(Group group, LevelWL l) {
-        Scene scene = new Scene(group, 1920, 1080, true);
+        Scene scene = new Scene(group, width, height, true);
         scene.setFill(Color.SKYBLUE);
         scene.setOnKeyPressed(event -> l.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> l.setKeyUp(event.getCode()));
@@ -79,7 +68,7 @@ public class TestWL extends Application {
     }
 
     private Group setupSubscene(LevelWL l) {
-        SubScene subScene = new SubScene(l, 1920, 1080, true, SceneAntialiasing.BALANCED);
+        SubScene subScene = new SubScene(l, width, height, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
         subScene.setCamera(l.getPlayer().getCamera());
         Group group = new Group();
@@ -159,8 +148,8 @@ public class TestWL extends Application {
         cross.setFitHeight(50);
 
         g.getChildren().add(cross);
-        cross.setTranslateX(800 / 2 - (cross.getBoundsInParent().getWidth() / 2));
-        cross.setTranslateY(600 / 2 - (cross.getBoundsInParent().getHeight() / 2));
+        cross.setTranslateX(width / 2 - (cross.getBoundsInParent().getWidth() / 2));
+        cross.setTranslateY(height / 2 - (cross.getBoundsInParent().getHeight() / 2));
     }
 
 }
