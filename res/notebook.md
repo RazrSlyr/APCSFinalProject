@@ -101,3 +101,6 @@ Jean Lic Picard
 TigerStar
 * Continued to help design the level, adding and positioning walls
 * More work on the level and targets
+* Spread the targets out
+* Increased wall height
+* Fixed some colors, etc.
