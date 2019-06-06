@@ -460,6 +460,10 @@ public class Main extends LevelWL {
             timeElapsed += deltaTime();
         }
         timeElapsedText.setText("Time elapsed: " + (timeElapsed/1000) + "\n" + "Number of targets remaining: " + getRemaining());
+
+        if(getRemaining() == 0){
+            timeElapsedText.setText("Congrats! You finished in " + (timeElapsed/1000) + " seconds.\n" + "Try to see if you can complete the level faster, or challenge a friend to see who can complete it first!");
+        }
 //        timeElapsed += deltaTime();
 //        timeElapsedText.setText("Time elapsed: " + (timeElapsed/1000));
     }

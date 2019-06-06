@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="APCSFinalProject:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/APCSFinalProject_jar</output-path>
+    <root id="archive" name="APCSFinalProject.jar">
+      <element id="module-output" name="APCSFinalProject" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../JFX3DModelImporters_EA_2014-02-09/jimObjModelImporterJFX.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
