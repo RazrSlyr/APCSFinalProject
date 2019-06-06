@@ -65,7 +65,6 @@ public class Main extends LevelWL {
         getChildren().add(w1);
 
 
-
         ActorBox w2 = buildWall(0,0,0, 4, 20, 20);
         w2.setTranslateZ(-200);
         w2.setTranslateX(-10);
@@ -130,114 +129,155 @@ public class Main extends LevelWL {
         ActorBox w14 = buildWall(0,0,0, 4, 20, 20);
         w14.setRotationAxis(Rotate.Y_AXIS);
         w14.setRotate(90);
-        w14.setTranslateZ(220);
+        w14.setTranslateZ(220 -210);
         w14.setTranslateX(-20);
         getChildren().add(w14);
 
         ActorBox w15 = buildWall(0,0,0, 4, 20, 20);
         w15.setRotationAxis(Rotate.Y_AXIS);
         w15.setRotate(90);
-        w15.setTranslateZ(205);
+        w15.setTranslateZ(205 -210);
         w15.setTranslateX(0);
         getChildren().add(w15);
 
         ActorBox w16 = buildWall(0,0,0, 4, 20, 20);
         w16.setRotationAxis(Rotate.Y_AXIS);
         w16.setRotate(90);
-        w16.setTranslateZ(190);
+        w16.setTranslateZ(190 -210);
         w16.setTranslateX(0);
         getChildren().add(w16);
 
         ActorBox w17 = buildWall(0,0,0, 4, 20, 15);
         w17.setRotationAxis(Rotate.Y_AXIS);
         w17.setRotate(90);
-        w17.setTranslateZ(210);
+        w17.setTranslateZ(210 -210);
         w17.setTranslateX(35);
         getChildren().add(w17);
 
         ActorBox w18 = buildWall(0,0,0, 4, 20, 15);
-        w18.setTranslateZ(210);
+        w18.setTranslateZ(210 -210);
         w18.setTranslateX(20);
         getChildren().add(w18);
 
         ActorBox w19 = buildWall(0,0,0, 4, 20, 20);
         w19.setRotationAxis(Rotate.Y_AXIS);
         w19.setRotate(90);
-        w19.setTranslateZ(180);
+        w19.setTranslateZ(180 -210);
         w19.setTranslateX(30);
         getChildren().add(w19);
 
         ActorBox w20 = buildWall(0,0,0, 4, 20, 20);
         w20.setRotationAxis(Rotate.Y_AXIS);
         w20.setRotate(90);
-        w20.setTranslateZ(170);
+        w20.setTranslateZ(170 -210);
         w20.setTranslateX(30);
         getChildren().add(w20);
 
         ActorBox w21 = buildWall(0,0,0, 4, 20, 20);
-        w21.setTranslateZ(170);
+        w21.setTranslateZ(170 -210);
         w21.setTranslateX(5);
         getChildren().add(w21);
 
         ActorBox w22 = buildWall(0,0,0, 4, 20, 20);
-        w22.setTranslateZ(170);
+        w22.setTranslateZ(170 -210);
         w22.setTranslateX(-5);
         getChildren().add(w22);
 
         ActorBox w23 = buildWall(0,0,0, 4, 20, 20);
         w23.setRotationAxis(Rotate.Y_AXIS);
         w23.setRotate(90);
-        w23.setTranslateZ(150);
+        w23.setTranslateZ(150 -210);
         w23.setTranslateX(5);
         getChildren().add(w23);
 
         ActorBox w24 = buildWall(0,0,0, 4, 20, 20);
-        w24.setTranslateZ(150);
+        w24.setTranslateZ(150 -210);
         w24.setTranslateX(20);
         getChildren().add(w24);
 
         ActorBox w25 = buildWall(0,0,0, 4, 20, 20);
-        w25.setTranslateZ(190);
+        w25.setTranslateZ(190 -210);
         w25.setTranslateX(-20);
         getChildren().add(w25);
 
         ActorBox w26 = buildWall(0,0,0, 4, 20, 20);
         w26.setRotationAxis(Rotate.Y_AXIS);
         w26.setRotate(90);
-        w26.setTranslateZ(150);
+        w26.setTranslateZ(150 -210);
         w26.setTranslateX(-20);
         getChildren().add(w26);
 
         ActorBox w27 = buildWall(0,0,0, 4, 20, 20);
         w27.setRotationAxis(Rotate.Y_AXIS);
         w27.setRotate(90);
-        w27.setTranslateZ(130);
+        w27.setTranslateZ(130 -210);
         w27.setTranslateX(-20);
         getChildren().add(w27);
 
         ActorBox w28 = buildWall(0,0,0, 4, 20, 20);
-        w28.setTranslateZ(110);
+        w28.setTranslateZ(110 -210);
         w28.setTranslateX(-20);
         getChildren().add(w28);
 
         ActorBox w29 = buildWall(0,0,0, 4, 20, 20);
-        w29.setTranslateZ(110);
+        w29.setTranslateZ(110 -210);
         w29.setTranslateX(-10);
         getChildren().add(w29);
 
         ActorBox w30 = buildWall(0,0,0, 4, 20, 20);
         w30.setRotationAxis(Rotate.Y_AXIS);
         w30.setRotate(90);
-        w30.setTranslateZ(110);
+        w30.setTranslateZ(110 -210);
         w30.setTranslateX(10);
         getChildren().add(w30);
 
         ActorBox w31 = buildWall(0,0,0, 4, 20, 20);
         w31.setRotationAxis(Rotate.Y_AXIS);
         w31.setRotate(90);
-        w31.setTranslateZ(120);
+        w31.setTranslateZ(120 -210);
         w31.setTranslateX(10);
         getChildren().add(w31);
+
+        ActorBox w32 = buildWall(0,0,0, 4, 20, 20);
+        w32.setTranslateZ(150 -210);
+        w32.setTranslateX(30);
+        getChildren().add(w32);
+
+        ActorBox w33 = buildWall(0,0,0, 4, 20, 10);
+        w33.setTranslateZ(136 -210);
+        w33.setTranslateX(0);
+        getChildren().add(w33);
+
+        ActorBox w34 = buildWall(0,0,0, 4, 20, 15);
+        w34.setRotationAxis(Rotate.Y_AXIS);
+        w34.setRotate(90);
+        w34.setTranslateZ(130 -210);
+        w34.setTranslateX(25);
+        getChildren().add(w34);
+
+        ActorBox wa5 = buildWall(0, 0, 0, 4, 20, 20);
+        ActorBox wa6 = buildWall(0, 0, 0, 4, 20, 20);
+
+        wa5.setRotationAxis(Rotate.Y_AXIS);
+        wa5.setRotate(90);
+
+        wa6.setRotationAxis(Rotate.Y_AXIS);
+        wa6.setRotate(90);
+
+        getChildren().add(wa5);
+        wa5.setTranslateX(10);
+        wa5.setTranslateZ(-180 + 210);
+
+        getChildren().add(wa6);
+        wa6.setTranslateX(10);
+        wa6.setTranslateZ(-160 + 210);
+
+        ActorBox wa7 = buildWall(0, 0, 0, 4, 20, 20);
+        wa7.setRotationAxis(Rotate.Y_AXIS);
+        wa7.setRotate(90);
+        getChildren().add(wa7);
+        wa7.setTranslateX(20);
+        wa7.setTranslateZ(-140 + 210);
     }
 
     public ActorBox buildWall(double x, double y, double z, double width, double height, double depth) {

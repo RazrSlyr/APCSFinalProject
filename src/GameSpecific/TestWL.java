@@ -31,7 +31,7 @@ public class TestWL extends Application {
 
         LevelWL testLevel = new Main();
         testLevel.setCameraGroup(cameraGroup);
-        PlayerWL player = new PlayerWL(0, 230, 1337, 1337, testLevel);
+        PlayerWL player = new PlayerWL(0, -230, 1337, 1337, testLevel);
         testLevel.setPlayer(player);
 
         cameraGroup = buildCameraGroup(player);
