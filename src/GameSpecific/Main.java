@@ -562,8 +562,8 @@ public class Main extends LevelWL {
     public void act() {
         if (getRemaining() != 0) {
             timeElapsed += deltaTime();
-            timeElapsedText.setText("Time elapsed: " + (timeElapsed/1000));
         }
+        timeElapsedText.setText("Time elapsed: " + (timeElapsed/1000) + "\n" + "Number of targets remaining: " + getRemaining());
 //        timeElapsed += deltaTime();
 //        timeElapsedText.setText("Time elapsed: " + (timeElapsed/1000));
     }
