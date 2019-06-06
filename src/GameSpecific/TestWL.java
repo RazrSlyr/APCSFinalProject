@@ -28,7 +28,7 @@ public class TestWL extends Application {
 
         LevelWL testLevel = new Main();
         testLevel.setCameraGroup(cameraGroup);
-        PlayerWL player = new PlayerWL(0, -230, 1337, 1337, testLevel);
+        PlayerWL player = new PlayerWL(0, 230, 1337, 1337, testLevel);
         testLevel.setPlayer(player);
 
         cameraGroup = buildCameraGroup(player);
@@ -65,7 +65,7 @@ public class TestWL extends Application {
     }
 
     private Scene setupScene(Group group, LevelWL l) {
-        Scene scene = new Scene(group, 800, 600, true);
+        Scene scene = new Scene(group, 1920, 1080, true);
         scene.setFill(Color.SKYBLUE);
         scene.setOnKeyPressed(event -> l.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> l.setKeyUp(event.getCode()));
@@ -79,7 +79,7 @@ public class TestWL extends Application {
     }
 
     private Group setupSubscene(LevelWL l) {
-        SubScene subScene = new SubScene(l, 800, 600, true, SceneAntialiasing.BALANCED);
+        SubScene subScene = new SubScene(l, 1920, 1080, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
         subScene.setCamera(l.getPlayer().getCamera());
         Group group = new Group();
