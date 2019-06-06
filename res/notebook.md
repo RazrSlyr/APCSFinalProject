@@ -104,3 +104,9 @@ TigerStar
 * Spread the targets out
 * Increased wall height
 * Fixed some colors, etc.
+
+Bumbling Bingus
+* Various physics changes, including improvements to collision
+detection and obtaining grounded state.
+* Changed bullets to be invisible to make it easier to render but still functional
+* Added the function to targets and added color change.
