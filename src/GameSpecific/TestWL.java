@@ -3,11 +3,14 @@ package GameSpecific;
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.application.Application;
 import javafx.beans.binding.ObjectBinding;
+import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.*;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.MeshView;
 import javafx.scene.text.Font;
@@ -22,6 +25,8 @@ public class TestWL extends Application {
     private final int width = getBounds()[0];
     private final int height = getBounds()[1];
 
+    Stage stage;
+
     /**
      * Java main for when running without JavaFX launcher
      */
@@ -32,6 +37,7 @@ public class TestWL extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setResizable(false);
+        stage = primaryStage;
 
         Group cameraGroup = new Group();
 
@@ -64,7 +70,12 @@ public class TestWL extends Application {
     private Scene setupScene(Group group, LevelWL l) {
         Scene scene = new Scene(group, width, height, true);
         scene.setFill(Color.SKYBLUE);
-        scene.setOnKeyPressed(event -> l.setKeyDown(event.getCode()));
+        scene.setOnKeyPressed(event -> {
+            l.setKeyDown(event.getCode());
+            if (event.getCode().equals(KeyCode.ESCAPE)) {
+                stage.close();
+            }
+        });
         scene.setOnKeyReleased(event -> l.setKeyUp(event.getCode()));
         scene.setOnMousePressed(event -> l.setMouseClicked(true));
         scene.setOnMouseReleased(event -> l.setMouseClicked(false));
@@ -166,7 +177,7 @@ public class TestWL extends Application {
         return new int[]{r.width, r.height};
     }
 
-    private Text addTimeTaken(Group g){
+    private Text addTimeTaken(Group g) {
         Text t = new Text(100, 100, "Time taken: ");
         t.setFont(new Font(20));
         g.getChildren().add(t);
