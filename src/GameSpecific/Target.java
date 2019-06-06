@@ -1,9 +1,12 @@
 package GameSpecific;
 
 import Structure.ActorBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
 
 public class Target extends ActorBox {
     private boolean isHit;
+    private LevelWL currLevel;
 
     public Target(double width, double height, double depth) {
         super(width, height, depth);
@@ -15,10 +18,12 @@ public class Target extends ActorBox {
 
     void setHit(boolean hit) {
         isHit = hit;
-        // switch model
     }
 
     @Override
     public void act() {
+        if (isHit()) {
+            this.setMaterial(new PhongMaterial(Color.RED));
+        }
     }
 }
