@@ -476,7 +476,7 @@ public class Main extends LevelWL {
         };
 
         PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(new Image(getClass().getResourceAsStream("../extraEpic.jpg")));
+        material.setDiffuseMap(new Image(getClass().getClassLoader().getResourceAsStream("extraEpic.jpg")));
         box.setMaterial(material);
         box.setTranslateX(x);
         box.setTranslateX(y);

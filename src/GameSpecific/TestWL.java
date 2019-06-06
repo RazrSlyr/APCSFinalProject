@@ -103,7 +103,7 @@ public class TestWL extends Application {
 
         Model gun = new Model();
         try {
-            objImporter.read(getClass().getResource("../KSR-29 sniper rifle new_obj.obj"));
+            objImporter.read(getClass().getClassLoader().getResource("KSR-29 sniper rifle new_obj.obj"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -161,7 +161,7 @@ public class TestWL extends Application {
     }
 
     private void addCrosshairs(Group g) {
-        Image crossImg = new Image(getClass().getResourceAsStream("../crosshairs.png"));
+        Image crossImg = new Image(getClass().getClassLoader().getResourceAsStream("crosshairs.png"));
         ImageView cross = new ImageView(crossImg);
         cross.setPreserveRatio(true);
         cross.setFitWidth(50);

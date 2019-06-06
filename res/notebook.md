@@ -110,3 +110,10 @@ Bumbling Bingus
 detection and obtaining grounded state.
 * Changed bullets to be invisible to make it easier to render but still functional
 * Added the function to targets and added color change.
+
+Note About Game Execution
+* The game should be played in 800 by 600 fullscreen.
+The 800 by 600 is to reduce lag, and the fullscreen is to make
+the mouse stay on screen. The game will always load up in fullscreen,
+so make sure to set your computer resolution to 800 by 600
+before opening it. Also use ESC to close the program.
