@@ -38,16 +38,13 @@ public class Main extends LevelWL {
      */
 
     // Platforms
-    public ArrayList<Platform> platforms = new ArrayList<>();
+
     // Timer
-    private long startTime = System.currentTimeMillis();
-    private long timeElapsed;
+
     // Targets
-    private int numHit;
-    private ArrayList<Target> targets = new ArrayList<>();
-    private PlayerWL p;
-    private Group cameraGroup;
+
     private Text timeElapsedText;
+
 
     public Main(Text text){
         timeElapsedText = text;
@@ -512,36 +509,9 @@ public class Main extends LevelWL {
         return p;
     }
 
-    public long getTimeElapsed() {
-        return timeElapsed;
-    }
-
-    public void add(Platform platform) {
-        super.add(platform);
-    }
-
-    public void addAll(Platform... platform) {
-        super.addAll(platform);
-    }
-
-    public int getNumHit() {
-        int count = 0;
-        for (Target target : targets) {
-            if (target.isHit()) {
-                count++;
-            }
-        }
-        numHit = count;
-        return count;
-    }
-
-    public void add(Target target) {
-        super.add(target);
-        targets.add(target);
-    }
 
     public void add(double x, double y, double z) {
-        Target target = new Target(3, 3, 3);
+        Target target = new Target(3, 3, 3, this);
         target.setMaterial(new PhongMaterial(Color.BLUE));
         target.setTranslateX(x);
         target.setTranslateY(y);
@@ -549,50 +519,6 @@ public class Main extends LevelWL {
         add(target);
     }
 
-
-    public void addAll(Target... target) {
-        super.addAll(target);
-        targets.addAll(Arrays.asList(target));
-    }
-
-    private int getRemaining() {
-        return targets.size() - numHit;
-    }
-
-    public void act() {
-        if (getRemaining() != 0) {
-            timeElapsed += deltaTime();
-        }
-        timeElapsedText.setText("Time elapsed: " + (timeElapsed/1000) + "\n" + "Number of targets remaining: " + getRemaining());
-//        timeElapsed += deltaTime();
-//        timeElapsedText.setText("Time elapsed: " + (timeElapsed/1000));
-    }
-
-    public PlayerWL getPlayer() {
-        return p;
-    }
-
-    public void setPlayer(PlayerWL p) {
-        this.p = p;
-        getChildren().add(p);
-    }
-
-    public void addCameraGroupToWorld() {
-        getChildren().add(cameraGroup);
-    }
-
-    public Group getCameraGroup() {
-        return cameraGroup;
-    }
-
-    public void setCameraGroup(Group g) {
-        cameraGroup = g;
-        cameraGroup.getTransforms().addAll(
-                new Rotate(0, Rotate.X_AXIS));
-
-        cameraGroup.setTranslateZ(-10);
-        cameraGroup.setTranslateX(-10);
-    }
 
 
 }

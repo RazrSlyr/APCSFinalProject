@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.beans.binding.ObjectBinding;
 import javafx.geometry.Point3D;
 import javafx.scene.*;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -14,10 +15,12 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class TestWL extends Application {
 
-    private final int width = 1920;
-    private final int height = 1080;
+    private final int width = getBounds()[0];
+    private final int height = getBounds()[1];
 
     /**
      * Java main for when running without JavaFX launcher
@@ -65,7 +68,8 @@ public class TestWL extends Application {
         scene.setOnKeyReleased(event -> l.setKeyUp(event.getCode()));
         scene.setOnMousePressed(event -> l.setMouseClicked(true));
         scene.setOnMouseReleased(event -> l.setMouseClicked(false));
-        scene.setOnMouseExited(event -> l.getPlayer().moveMouse(1500, 1000));
+        scene.setOnMouseExited(event -> l.getPlayer().moveMouse(getBounds()[0] / 2, getBounds()[1] / 2));
+        scene.setOnMouseDragExited(event -> l.getPlayer().moveMouse(getBounds()[0] / 2, getBounds()[1] / 2));
         scene.setCursor(Cursor.NONE);
 
         return scene;
@@ -155,6 +159,11 @@ public class TestWL extends Application {
         g.getChildren().add(cross);
         cross.setTranslateX(width / 2 - (cross.getBoundsInParent().getWidth() / 2));
         cross.setTranslateY(height / 2 - (cross.getBoundsInParent().getHeight() / 2));
+    }
+
+    private int[] getBounds() {
+        Rectangle r = MouseInfo.getPointerInfo().getDevice().getConfigurations()[0].getBounds();
+        return new int[]{r.width, r.height};
     }
 
     private Text addTimeTaken(Group g){

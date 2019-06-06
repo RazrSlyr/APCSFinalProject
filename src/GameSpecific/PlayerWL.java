@@ -1,7 +1,6 @@
 package GameSpecific;
 
 import Structure.Actor;
-import Structure.ActorBox;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
@@ -16,7 +15,6 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class PlayerWL extends Group implements Actor {
 
@@ -55,7 +53,8 @@ public class PlayerWL extends Group implements Actor {
     private final int BACK = 3;
     private final int NONE = 4;
 
-    private final double Z_SHIFT_GROUND = 2;
+    private final double Z_SHIFT = 3.6;
+    private final double X_SHIFT = 0;
 
 
     //variable that keeps track of if you're grounded (boolean)
@@ -188,9 +187,9 @@ public class PlayerWL extends Group implements Actor {
 
         if (currLevel.isKeyDown(KeyCode.SLASH)) {
             if (getGround() != null) {
-                BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX,
+                BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX + X_SHIFT,
                         groundCheck.getBoundsInParent().getMinY() + positionY,
-                        groundCheck.getBoundsInParent().getMinZ() + positionZ + Z_SHIFT_GROUND,
+                        groundCheck.getBoundsInParent().getMinZ() + positionZ + Z_SHIFT,
                         0,
                         groundCheck.getHeight(),
                         0);
@@ -447,9 +446,9 @@ public class PlayerWL extends Group implements Actor {
     }
 
     public boolean isGrounded() {
-        BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX,
+        BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX + X_SHIFT,
                 groundCheck.getBoundsInParent().getMinY() + positionY,
-                groundCheck.getBoundsInParent().getMinZ() + positionZ + Z_SHIFT_GROUND,
+                groundCheck.getBoundsInParent().getMinZ() + positionZ + Z_SHIFT,
                 0,
                 groundCheck.getHeight(),
                 0);
@@ -468,9 +467,9 @@ public class PlayerWL extends Group implements Actor {
 
     public <A extends Node> A getGround() {
         if (isGrounded()) {
-            BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX,
+            BoundingBox b = new BoundingBox(groundCheck.getBoundsInParent().getMinX() + positionX + X_SHIFT,
                     groundCheck.getBoundsInParent().getMinY() + positionY,
-                    groundCheck.getBoundsInParent().getMinZ() + positionZ + Z_SHIFT_GROUND,
+                    groundCheck.getBoundsInParent().getMinZ() + positionZ + Z_SHIFT,
                     0,
                     groundCheck.getHeight(),
                     0);
@@ -490,7 +489,7 @@ public class PlayerWL extends Group implements Actor {
 
     private boolean isColliding() {
 
-        BoundingBox b = new BoundingBox(positionX, positionY, positionZ + Z_SHIFT_GROUND,
+        BoundingBox b = new BoundingBox(positionX + X_SHIFT, positionY, positionZ + Z_SHIFT,
                 3, 0, 3);
 //
 //        System.out.printf("X: %f, Y: %f, Z: %f\n", positionX, positionY, positionZ);
@@ -516,7 +515,7 @@ public class PlayerWL extends Group implements Actor {
     }
 
     private Node getColliding() {
-        BoundingBox b = new BoundingBox(positionX, positionY, positionZ + Z_SHIFT_GROUND,
+        BoundingBox b = new BoundingBox(positionX + X_SHIFT, positionY, positionZ + Z_SHIFT,
                 3, 0, 3);
 
 //        System.out.printf("X: %f, Y: %f, Z: %f\n", positionX, positionY, positionZ);
