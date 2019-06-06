@@ -151,5 +151,4 @@ public class TestWL extends Application {
         cross.setTranslateX(width / 2 - (cross.getBoundsInParent().getWidth() / 2));
         cross.setTranslateY(height / 2 - (cross.getBoundsInParent().getHeight() / 2));
     }
-
 }
