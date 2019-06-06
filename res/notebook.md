@@ -4,8 +4,7 @@
 
 Group includes Rohan Venkatapuram (Bumbing Bingus), Ashish Rao (Jean-Luc Picard), Amartya Bhattacharya (TigerStar), and 
 Siddarth Viswanathan (Shadowclaw Epic Styl). 
-Game being built is a 3D first-person shooter game which allows for players to use traditional weaponry 
-and also a portal gun similar to the popular game 'Portal' to take out targets.
+Game being built is a 3D first-person shooter game which allows for players to use a traditional gun to shoot targets. If time permits, we will also add the ability to use portals to spice up movement and shooting options.
 
 ## 5/19/19
 
