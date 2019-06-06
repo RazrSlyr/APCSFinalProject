@@ -2,12 +2,15 @@ package GameSpecific;
 
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.application.Application;
+import javafx.beans.binding.ObjectBinding;
 import javafx.geometry.Point3D;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.MeshView;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
@@ -29,7 +32,7 @@ public class TestWL extends Application {
 
         Group cameraGroup = new Group();
 
-        LevelWL testLevel = new Main();
+        Main testLevel = new Main(new Text());
         testLevel.setCameraGroup(cameraGroup);
         PlayerWL player = new PlayerWL(0, -230, 1337, 1337, testLevel);
         testLevel.setPlayer(player);
@@ -41,6 +44,8 @@ public class TestWL extends Application {
         testLevel.addCameraGroupToWorld();
 
         Group group = setupSubscene(testLevel);
+        Text t = addTimeTaken(group);
+        testLevel.setTimeElapsedText(t);
         Scene scene = setupScene(group, testLevel);
 
         addCrosshairs(group);
@@ -54,7 +59,7 @@ public class TestWL extends Application {
     }
 
     private Scene setupScene(Group group, LevelWL l) {
-        Scene scene = new Scene(group, 800, 600, true);
+        Scene scene = new Scene(group, width, height, true);
         scene.setFill(Color.SKYBLUE);
         scene.setOnKeyPressed(event -> l.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> l.setKeyUp(event.getCode()));
@@ -68,7 +73,7 @@ public class TestWL extends Application {
     }
 
     private Group setupSubscene(LevelWL l) {
-        SubScene subScene = new SubScene(l, 800, 600, true, SceneAntialiasing.BALANCED);
+        SubScene subScene = new SubScene(l, width, height, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
         subScene.setCamera(l.getPlayer().getCamera());
         Group group = new Group();
@@ -148,7 +153,14 @@ public class TestWL extends Application {
         cross.setFitHeight(50);
 
         g.getChildren().add(cross);
-        cross.setTranslateX(800 / 2 - (cross.getBoundsInParent().getWidth() / 2));
-        cross.setTranslateY(600 / 2 - (cross.getBoundsInParent().getHeight() / 2));
+        cross.setTranslateX(width / 2 - (cross.getBoundsInParent().getWidth() / 2));
+        cross.setTranslateY(height / 2 - (cross.getBoundsInParent().getHeight() / 2));
+    }
+
+    private Text addTimeTaken(Group g){
+        Text t = new Text(100, 100, "Time taken: ");
+        t.setFont(new Font(20));
+        g.getChildren().add(t);
+        return t;
     }
 }

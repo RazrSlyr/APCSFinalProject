@@ -354,7 +354,7 @@ public class PlayerWL extends Group implements Actor {
         if (positionY > 10) {
             positionY = -5;
             positionX = 0;
-            positionZ = 230;
+            positionZ = -230;
             cameraGroup.setTranslateX(positionX);
             cameraGroup.setTranslateY(positionY);
             cameraGroup.setTranslateZ(positionZ);

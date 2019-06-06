@@ -82,6 +82,7 @@ Jean-Luc Picard
 * Changed shooting to use the mouse
 * Improved shooting spawn point
 * Experimented with adding new entities like enemies
+* started designing a level
 
 Bumbling Bingus
 * Fixed the issues with level implementation. Turns out it wasn't working
@@ -96,4 +97,6 @@ TigerStar
 Shadowclaw Epic Style
 * Added targets to the world
 
-
+Jean Lic Picard
+* Added walls and set up the map
+* Added a timer to the screen

@@ -7,6 +7,8 @@ import javafx.scene.PointLight;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.MeshView;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
 import java.util.ArrayList;
@@ -45,8 +47,10 @@ public class Main extends LevelWL {
     private ArrayList<Target> targets = new ArrayList<>();
     private PlayerWL p;
     private Group cameraGroup;
+    private Text timeElapsedText;
 
-    public Main() {
+    public Main(Text text){
+        timeElapsedText = text;
 
         ActorBox floor = buildFloor();
         getChildren().add(buildPointlight(0, -20, 0));
@@ -94,38 +98,38 @@ public class Main extends LevelWL {
 
         getChildren().add(w5);
         w5.setTranslateX(-20);
-        w5.setTranslateZ(40);
+        w5.setTranslateZ(-180);
 
         getChildren().add(w6);
         w6.setTranslateX(-20);
-        w6.setTranslateZ(30);
+        w6.setTranslateZ(-160);
 
-        ActorBox w7 = buildWall(0, 0, 0, 4, 20, 20);
+        ActorBox w7 = buildWall(0,0,0, 4, 20, 20);
         w7.setRotationAxis(Rotate.Y_AXIS);
         w7.setRotate(90);
         getChildren().add(w7);
-        w7.setTranslateX(-40);
-        w7.setTranslateZ(0);
+        w7.setTranslateX(0);
+        w7.setTranslateZ(-140);
 
-        ActorBox w10 = buildWall(0, 0, 0, 4, 20, 20);
-        w10.setTranslateZ(-20);
+        ActorBox w10 = buildWall(0,0,0, 4, 20, 20);
+        w10.setTranslateZ(-120);
         w10.setTranslateX(30);
         getChildren().add(w10);
 
-        ActorBox w11 = buildWall(0, 0, 0, 4, 20, 20);
-        w11.setTranslateZ(-10);
+        ActorBox w11 = buildWall(0,0,0, 4, 20, 20);
+        w11.setTranslateZ(-120);
         w11.setTranslateX(20);
         getChildren().add(w11);
 
-        ActorBox w13 = buildWall(0, 0, 0, 4, 20, 20);
-        w13.setTranslateZ(20);
+        ActorBox w13 = buildWall(0,0,0, 4, 20, 20);
+        w13.setTranslateZ(-120);
         w13.setTranslateX(-20);
         getChildren().add(w13);
 
         ActorBox w14 = buildWall(0, 0, 0, 4, 20, 20);
         w14.setRotationAxis(Rotate.Y_AXIS);
         w14.setRotate(90);
-        w14.setTranslateZ(220 - 210);
+        w14.setTranslateZ(220 -210);
         w14.setTranslateX(-20);
         getChildren().add(w14);
 
@@ -252,6 +256,10 @@ public class Main extends LevelWL {
         getChildren().add(w34);
 
         copyMaze();
+    }
+
+    public void setTimeElapsedText(Text t){
+        timeElapsedText = t;
     }
 
     public void copyMaze(){
@@ -554,8 +562,10 @@ public class Main extends LevelWL {
     public void act() {
         if (getRemaining() != 0) {
             timeElapsed += deltaTime();
+            timeElapsedText.setText("Time left: " + timeElapsed);
         }
-
+//        timeElapsed += deltaTime();
+//        timeElapsedText.setText("Time elapsed: " + (timeElapsed/1000));
     }
 
     public PlayerWL getPlayer() {
