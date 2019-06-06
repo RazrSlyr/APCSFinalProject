@@ -459,6 +459,16 @@ public class Main extends LevelWL {
         add(30, -3, 110);
     }
 
+
+    public void act() {
+        if (getRemaining() != 0) {
+            timeElapsed += deltaTime();
+        }
+        timeElapsedText.setText("Time elapsed: " + (timeElapsed/1000) + "\n" + "Number of targets remaining: " + getRemaining());
+//        timeElapsed += deltaTime();
+//        timeElapsedText.setText("Time elapsed: " + (timeElapsed/1000));
+    }
+
     public ActorBox buildWall(double x, double y, double z, double width, double height, double depth) {
         ActorBox box = new ActorBox(width, height, depth) {
             @Override

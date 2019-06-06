@@ -39,7 +39,7 @@ public class LevelWL extends World {
     public ArrayList<Platform> platforms = new ArrayList<>();
     // Timer
     private long startTime = System.currentTimeMillis();
-    private long timeElapsed;
+    protected long timeElapsed;
     // Targets
     private int numHit;
     private ArrayList<Target> targets = new ArrayList<>();
@@ -80,8 +80,8 @@ public class LevelWL extends World {
         targets.addAll(Arrays.asList(target));
     }
 
-    private int getRemaining() {
-        return targets.size() - numHit;
+    public int getRemaining() {
+        return targets.size() - getNumHit();
     }
 
     public void act() {
