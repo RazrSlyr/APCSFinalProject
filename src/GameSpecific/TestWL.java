@@ -54,7 +54,7 @@ public class TestWL extends Application {
     }
 
     private Scene setupScene(Group group, LevelWL l) {
-        Scene scene = new Scene(group, width, height, true);
+        Scene scene = new Scene(group, 400, 300, true);
         scene.setFill(Color.SKYBLUE);
         scene.setOnKeyPressed(event -> l.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> l.setKeyUp(event.getCode()));
@@ -68,7 +68,7 @@ public class TestWL extends Application {
     }
 
     private Group setupSubscene(LevelWL l) {
-        SubScene subScene = new SubScene(l, width, height, true, SceneAntialiasing.BALANCED);
+        SubScene subScene = new SubScene(l, 400, 300, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
         subScene.setCamera(l.getPlayer().getCamera());
         Group group = new Group();
@@ -148,7 +148,7 @@ public class TestWL extends Application {
         cross.setFitHeight(50);
 
         g.getChildren().add(cross);
-        cross.setTranslateX(width / 2 - (cross.getBoundsInParent().getWidth() / 2));
-        cross.setTranslateY(height / 2 - (cross.getBoundsInParent().getHeight() / 2));
+        cross.setTranslateX(800 / 2 - (cross.getBoundsInParent().getWidth() / 2));
+        cross.setTranslateY(600 / 2 - (cross.getBoundsInParent().getHeight() / 2));
     }
 }

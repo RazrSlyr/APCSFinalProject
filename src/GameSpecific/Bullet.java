@@ -2,6 +2,7 @@ package GameSpecific;
 
 import Structure.ActorSphere;
 import Structure.World;
+import javafx.geometry.BoundingBox;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -27,7 +28,7 @@ public class Bullet extends ActorSphere {
 
 
     public Bullet(double[] position, double[] angle, double speed, LevelWL l) {
-        super(0.01);
+        super(0.00);
         posX = position[0];
         posY = position[1];
         posZ = position[2];
@@ -131,14 +132,21 @@ public class Bullet extends ActorSphere {
     }
 
     private boolean isIntersectingObjectInParent(Parent p) {
+
+        BoundingBox b = new BoundingBox(posX - 0.05,
+                posY - 0.05,
+                posZ - 0.05,
+                .1,
+                .1,
+                .1);
+
         for (int i = 0; i < p.getChildrenUnmodifiable().size(); i++) {
             if (p.getChildrenUnmodifiable().get(i) instanceof Parent && !(p.getChildrenUnmodifiable().get(i) instanceof Model) && !(p.getChildrenUnmodifiable().get(i) instanceof PlayerWL)) {
                 if (isIntersectingObjectInParent((Parent) (p.getChildrenUnmodifiable().get(i)))) {
                     return true;
                 }
             } else {
-                if (!(p.getChildrenUnmodifiable().get(i) instanceof Bullet) &&
-                        getBoundsInParent().intersects(p.getChildrenUnmodifiable().get(i).getBoundsInParent()) &&
+                if (!(p.getChildrenUnmodifiable().get(i) instanceof Bullet) && b.intersects(p.getChildrenUnmodifiable().get(i).getBoundsInParent()) &&
                         !p.getChildrenUnmodifiable().get(i).equals(this) &&
                         !(p.getChildrenUnmodifiable().get(i) instanceof PlayerWL)) {
                     return true;
