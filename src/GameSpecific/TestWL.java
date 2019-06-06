@@ -54,7 +54,7 @@ public class TestWL extends Application {
     }
 
     private Scene setupScene(Group group, LevelWL l) {
-        Scene scene = new Scene(group, 400, 300, true);
+        Scene scene = new Scene(group, 800, 600, true);
         scene.setFill(Color.SKYBLUE);
         scene.setOnKeyPressed(event -> l.setKeyDown(event.getCode()));
         scene.setOnKeyReleased(event -> l.setKeyUp(event.getCode()));
@@ -68,7 +68,7 @@ public class TestWL extends Application {
     }
 
     private Group setupSubscene(LevelWL l) {
-        SubScene subScene = new SubScene(l, 400, 300, true, SceneAntialiasing.BALANCED);
+        SubScene subScene = new SubScene(l, 800, 600, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.SKYBLUE);
         subScene.setCamera(l.getPlayer().getCamera());
         Group group = new Group();

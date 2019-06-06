@@ -446,7 +446,12 @@ public class Main extends LevelWL {
         getChildren().add(w34);
 
         // Targets
-        add(-10, 0, -150);
+        add(-10, -5, -150);
+        add(30, -1, -100);
+        add(0, -2, 0);
+        add(10, 0, 22);
+        add(-5, -4, 50);
+        add(30, -3, 110);
     }
 
     public ActorBox buildWall(double x, double y, double z, double width, double height, double depth) {
@@ -529,7 +534,7 @@ public class Main extends LevelWL {
 
     public void add(double x, double y, double z) {
         Target target = new Target(3, 3, 3);
-        target.setMaterial(new PhongMaterial(Color.GREY));
+        target.setMaterial(new PhongMaterial(Color.BLUE));
         target.setTranslateX(x);
         target.setTranslateY(y);
         target.setTranslateZ(z);
