@@ -490,7 +490,7 @@ public class PlayerWL extends Group implements Actor {
     private boolean isColliding() {
 
         BoundingBox b = new BoundingBox(positionX + X_SHIFT, positionY, positionZ + Z_SHIFT,
-                3, 0, 3);
+                0.5, 0, 0.5);
 //
 //        System.out.printf("X: %f, Y: %f, Z: %f\n", positionX, positionY, positionZ);
 //        System.out.printf("X Bounds: (%f, %f), Y Bounds: (%f, %f), Z Bounds: (%f, %f)\n", b.getMinX(), b.getMaxX(), b.getMinY(), b.getMaxY(), b.getMinZ(), b.getMaxZ());
@@ -516,7 +516,7 @@ public class PlayerWL extends Group implements Actor {
 
     private Node getColliding() {
         BoundingBox b = new BoundingBox(positionX + X_SHIFT, positionY, positionZ + Z_SHIFT,
-                3, 0, 3);
+                0.5, 0, 0.5);
 
 //        System.out.printf("X: %f, Y: %f, Z: %f\n", positionX, positionY, positionZ);
 //        System.out.printf("X Bounds: (%f, %f), Y Bounds: (%f, %f), Z Bounds: (%f, %f)\n", b.getMinX(), b.getMaxX(), b.getMinY(), b.getMaxY(), b.getMinZ(), b.getMaxZ());
